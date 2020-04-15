@@ -1,0 +1,6 @@
+<div>
+    <input #username class="credentialsInput" type="text" placeholder="username" (keyup.enter)="submitCredentials(username.value, password.value)">
+    <input #password class="credentialsInput" type="password" placeholder="password" (keyup.enter)="submitCredentials(username.value, password.value)">
+    <input type="button" value="Login" (click)="submitCredentials(username.value, password.value)">
+    <p>{{ message }}</p>
+</div>
