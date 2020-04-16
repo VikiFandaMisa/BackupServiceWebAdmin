@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
@@ -9,7 +11,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class LoginComponent implements OnInit {
   message: string;
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -18,7 +20,8 @@ export class LoginComponent implements OnInit {
     this.authenticationService.authenticate(username, password)
     .then(
       () => {
-        console.log(this.authenticationService.account.username)
+        console.log(this.authenticationService.account.username);
+        this.router.navigate(['accounts']);
       },
       (error) => {
         if (error.status == 401)
