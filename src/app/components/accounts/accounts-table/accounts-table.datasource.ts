@@ -6,7 +6,7 @@ import { Observable, of as observableOf, merge } from 'rxjs';
 
 import { AccountModel } from '../../../models/account';
 
-const EXAMPLE_DATA: AccountModel[] = [
+/*const EXAMPLE_DATA: AccountModel[] = [
   {
     "id": 3,
     "username": "test_admin",
@@ -25,7 +25,7 @@ const EXAMPLE_DATA: AccountModel[] = [
     "sendReports": false,
     "reportPeriod": ""
   }
-]
+]*/
 
 /**
  * Data source for the DataClientTable view. This class should
@@ -33,7 +33,7 @@ const EXAMPLE_DATA: AccountModel[] = [
  * (including sorting, pagination, and filtering).
  */
 export class AccountsTableDatasource extends DataSource<AccountModel> {
-  data: AccountModel[] = EXAMPLE_DATA;
+  data: AccountModel[] = [];
   paginator: MatPaginator;
   sort: MatSort;
 

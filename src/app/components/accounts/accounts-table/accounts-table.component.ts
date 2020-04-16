@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
-
+import { AccountsService } from '../../../Services/accounts.service';
 import { AccountModel } from '../../../models/account';
 import { AccountsTableDatasource } from './accounts-table.datasource';
 
@@ -16,7 +16,7 @@ export class AccountsTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<AccountModel>;
 
-  constructor() { }
+  constructor(private acc:AccountsService) { }
   
   datasource: AccountsTableDatasource;
 
@@ -25,6 +25,7 @@ export class AccountsTableComponent implements OnInit {
 
   ngOnInit() {
     this.datasource = new AccountsTableDatasource();
+    this.acc.fetchAccounts().subscribe(accounts => this.datasource.data = accounts);
   }
 
   ngAfterViewInit() {
