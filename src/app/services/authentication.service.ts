@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { AccountModel } from '../models/account';
 import { TokenModel } from '../models/token';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class AuthenticationService {
 
   authenticate = async (username: string, password: string) => {
     await this.http.post<TokenModel>(
-      "https://localhost:5001/api/token",
+      environment.server + "token",
       {
         "Username": username,
         "Password": password
@@ -38,7 +39,7 @@ export class AuthenticationService {
 
   private loadSelf = async () => {
     await this.http.get<AccountModel>(
-      "https://localhost:5001/api/accounts/self",
+      environment.server + "accounts/self",
       {
         headers: new HttpHeaders({
           'Authorization': 'Bearer ' + this.token

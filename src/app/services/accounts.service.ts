@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthenticationService } from './authentication.service';
 import { AccountModel } from '../models/account';
 
+import { environment } from 'src/environments/environment';
+
 //AccountsService
 @Injectable({
   providedIn: 'root'
@@ -14,13 +16,14 @@ export class AccountsService {
   constructor(private http: HttpClient, private auth:AuthenticationService) { }
 
   fetchAccounts() { 
+    console.log(this.auth.token);
     return this.http.get<AccountModel[]>(
-      "https://localhost:5001/api/accounts",
+      environment.server + "accounts",
       {
         headers: new HttpHeaders({
-          'Authorization': 'Bearer ' + this.auth.token
-        }
-        )
+          //'Authorization': 'Bearer '
+          'Authorization': this.auth.token
+        })
       }
     )
   }
