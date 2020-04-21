@@ -15,7 +15,7 @@ export class AuthenticationService {
 
   authenticate = async (username: string, password: string) => {
     await this.http.post<TokenModel>(
-      "https://localhost:5001/api/token",
+      "https://localhost:5001/api/token/user",
       {
         "Username": username,
         "Password": password
