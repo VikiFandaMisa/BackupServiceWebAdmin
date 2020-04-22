@@ -15,12 +15,15 @@ import { LoginComponent } from './components/login/login.component';
 import { AccountsComponent } from './components/accounts/accounts.component';
 import { AccountsTableComponent } from './components/accounts/accounts-table/accounts-table.component';
 import { HomeComponent } from './components/home/home.component';
+import { ComputersComponent } from './components/computers/computers.component';
+import { ComputersTableComponent } from './components/computers/computers-table/computers-table.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'accounts', component: AccountsComponent }
+  { path: 'accounts', component: AccountsComponent },
+  { path: 'computers', component: ComputersComponent }
 ];
 
 @NgModule({
@@ -32,7 +35,9 @@ const appRoutes: Routes = [
     AppComponent,
     AccountsComponent,
     AccountsTableComponent,
-    HomeComponent
+    HomeComponent,
+    ComputersComponent,
+    ComputersTableComponent
   ],
   imports: [
     RouterModule.forRoot(

@@ -37,17 +37,4 @@ export class AccountsTableComponent implements OnInit {
     this.datasource.paginator = this.paginator;
     this.table.dataSource = this.datasource;
   }
-
-  addtest() {
-    this.datasource.data.push({
-      "id": Math.random(),
-      "username": "test",
-      "password": "",
-      "admin": false,
-      "email": "test@test.test",
-      "sendReports": false,
-      "reportPeriod": ""
-    });
-    this.datasource.refresh();
-  }
 }
