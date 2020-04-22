@@ -2,8 +2,9 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
-import { AccountsService } from '../../../Services/accounts.service';
-import { AccountModel } from '../../../models/account';
+
+import { AccountsService } from 'src/app/services/accounts.service';
+import { AccountModel } from 'src/app/models/account';
 import { AccountsTableDatasource } from './accounts-table.datasource';
 
 @Component({
