@@ -18,7 +18,7 @@ export class AuthenticationService {
   }
 
   constructor(private http: HttpClient) { }
-
+  
   loadToken() {
     this.token = sessionStorage.getItem('token');
   }
