@@ -19,14 +19,12 @@ export class LoginComponent implements OnInit {
   submitCredentials(username: string, password: string): void {
     this.authenticationService.authenticate(username, password)
     .subscribe(
-      token => { console.log("got token in login component " + token) },
+      token => { this.router.navigate(['home']) },
       error => {
         if (error.status == 401)
           this.message = "Wrong password or username";
         else
           this.message = "Error " + error.status;
-
-        console.log(error);
       }
     );
   }

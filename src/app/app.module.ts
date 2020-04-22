@@ -14,10 +14,12 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { LoginComponent } from './components/login/login.component';
 import { AccountsComponent } from './components/accounts/accounts.component';
 import { AccountsTableComponent } from './components/accounts/accounts-table/accounts-table.component';
+import { HomeComponent } from './components/home/home.component';
 
 const appRoutes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
   { path: 'accounts', component: AccountsComponent }
 ];
 
@@ -29,7 +31,8 @@ const appRoutes: Routes = [
     LoginComponent,
     AppComponent,
     AccountsComponent,
-    AccountsTableComponent
+    AccountsTableComponent,
+    HomeComponent
   ],
   imports: [
     RouterModule.forRoot(
