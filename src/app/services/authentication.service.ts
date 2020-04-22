@@ -3,50 +3,51 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { AccountModel } from '../models/account';
 import { TokenModel } from '../models/token';
+import { environment } from 'src/environments/environment';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
   token: string;
-  account: AccountModel;
+
+  get authorizationHeader(): string {
+    return 'Bearer ' + this.token;
+  }
 
   constructor(private http: HttpClient) { }
+  
+  loadToken() {
+    this.token = sessionStorage.getItem('token');
+  }
 
-  authenticate = async (username: string, password: string) => {
-    await this.http.post<TokenModel>(
-      "https://localhost:5001/api/token/user",
+  saveToken() {
+    sessionStorage.setItem('token', this.token);
+  }
+
+  authenticate(username: string, password: string): Observable<TokenModel> {
+    console.log("creating request " + username + ":" + password);
+    return this.http.post<TokenModel>(
+      environment.server + 'token/user',
       {
-        "Username": username,
-        "Password": password
+        'Username': username,
+        'Password': password
       },
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json'
         })
       }
-    )
-    .toPromise()
-    .then(
-      async token => {
+    ).pipe(
+      map(token => {
         this.token = token.token;
-        await this.loadSelf();
-      },
-      error => { throw error }
-    );
-  }
-
-  private loadSelf = async () => {
-    await this.http.get<AccountModel>(
-      "https://localhost:5001/api/accounts/self",
-      {
-        headers: new HttpHeaders({
-          'Authorization': 'Bearer ' + this.token
-        })
-      }
+        this.saveToken();
+        console.log("saving " + this.token);
+        console.log("saving " + token.token);
+        return token;
+      })
     )
-    .toPromise()
-    .then(account => this.account = account, error => { throw error });
   }
-  
 }

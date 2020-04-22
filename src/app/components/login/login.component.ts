@@ -16,18 +16,17 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  submitCredentials = (username: string, password: string): void => {
+  submitCredentials(username: string, password: string): void {
     this.authenticationService.authenticate(username, password)
-    .then(
-      () => {
-        console.log(this.authenticationService.account.username);
-        this.router.navigate(['accounts']);
-      },
-      (error) => {
+    .subscribe(
+      token => { console.log("got token in login component " + token) },
+      error => {
         if (error.status == 401)
           this.message = "Wrong password or username";
         else
           this.message = "Error " + error.status;
+
+        console.log(error);
       }
     );
   }
