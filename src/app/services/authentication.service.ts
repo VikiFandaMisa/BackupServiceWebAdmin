@@ -46,4 +46,9 @@ export class AuthenticationService {
       })
     )
   }
+
+  logout() {
+    this.token = null;
+    sessionStorage.clear();
+  }
 }
