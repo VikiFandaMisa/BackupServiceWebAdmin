@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
@@ -18,14 +17,6 @@ import { HomeComponent } from './components/home/home.component';
 import { ComputersComponent } from './components/computers/computers.component';
 import { ComputersTableComponent } from './components/computers/computers-table/computers-table.component';
 
-const appRoutes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'accounts', component: AccountsComponent },
-  { path: 'computers', component: ComputersComponent }
-];
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,10 +31,6 @@ const appRoutes: Routes = [
     ComputersTableComponent
   ],
   imports: [
-    RouterModule.forRoot(
-      appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
-    ),
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

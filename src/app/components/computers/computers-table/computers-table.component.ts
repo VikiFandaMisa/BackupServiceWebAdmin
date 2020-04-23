@@ -4,7 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 
 import { ComputersService } from 'src/app/services/computers.service';
-import { ComputerModel } from 'src/app/models/computer';
+import { ComputerModel, ComputerStatus } from 'src/app/models/computer';
 import { ComputersTableDatasource } from './computers-table.datasource';
 
 @Component({
@@ -36,5 +36,9 @@ export class ComputersTableComponent implements OnInit {
     this.datasource.sort = this.sort;
     this.datasource.paginator = this.paginator;
     this.table.dataSource = this.datasource;
+  }
+
+  status(status: ComputerStatus): string {
+    return ComputerStatus.toString(status);
   }
 }
