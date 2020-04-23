@@ -1,34 +1,39 @@
-<div class="mat-elevation-z8">
-    <table mat-table class="full-width-table" matSort aria-label="Elements">
+<div class="jumbotron text-center">
+	<h1 class="display-5">
+		Computers
+	</h1>
+</div>
 
-    <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>id</th>
-        <td mat-cell *matCellDef="let row">{{row.id}}</td>
-    </ng-container>
+<div class="container">
+	<div class="row custom-wrapper">
+		<div class="col-md-12">
 
-    <ng-container matColumnDef="hostname">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>hostname</th>
-        <td mat-cell *matCellDef="let row">{{row.hostname}}</td>
-    </ng-container>
+			<!-- Form starts -->
+			<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+				<div class="group-gap">
+					<div class="d-block my-3">
 
-    <ng-container matColumnDef="ip">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>ip</th>
-        <td mat-cell *matCellDef="let row">{{row.ip}}</td>
-    </ng-container>
+          <div class="mb-3">
+            <select class="custom-select" (change)="changeCity($event)" formControlName="cityName">
+              <option value="">Choose your city</option>
+              <option [class.selected]="city===selectedcomputer" *ngFor="let city of City" [ngValue]="city">{{city}}</option>                                       
+            </select>
+            
 
-    <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>status</th>
-        <td mat-cell *matCellDef="let row">{{ status(row.status) }}</td>
-    </ng-container>
+            <!-- error block -->
+            <div class="invalid-feedback" *ngIf="isSubmitted && cityName.errors?.required">
+              <sup>*</sup>Please enter your city name
+            </div>
+          </div>            
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+          </div>
+        </div>
 
-    <mat-paginator #paginator
-        [length]="datasource?.data.length"
-        [pageIndex]="0"
-        [pageSize]="50"
-        [pageSizeOptions]="[1,25, 50, 100, 250]">
-    </mat-paginator>
+          <!-- Submit Button -->
+          <button (click)="getcomputerdata()" >GetData</button>
+          <p>{{selectedcomputer}}</p>
+      </form><!-- Form ends -->
+
+    </div>
+  </div>
 </div>

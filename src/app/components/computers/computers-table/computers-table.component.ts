@@ -1,11 +1,12 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTable } from '@angular/material/table';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from "@angular/forms";
 
-import { ComputersService } from 'src/app/services/computers.service';
-import { ComputerModel, ComputerStatus } from 'src/app/models/computer';
-import { ComputersTableDatasource } from './computers-table.datasource';
+let userTestStatus: { id: number, name: string }[] = [
+  { "id": 0, "name": "Available" },
+  { "id": 1, "name": "Ready" },
+  { "id": 2, "name": "Started" }
+];
+
 
 @Component({
   selector: 'app-computers-table',
@@ -13,32 +14,59 @@ import { ComputersTableDatasource } from './computers-table.datasource';
   styleUrls: ['./computers-table.component.scss']
 })
 export class ComputersTableComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatTable) table: MatTable<ComputerModel>;
+  isSubmitted = false;
 
-  constructor(private computersService: ComputersService) { }
   
-  datasource: ComputersTableDatasource;
+  // City Names
+  City: any = ["hello", 'South Dakota', 'Tennessee', 'Michigan']
 
-  /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'hostname', 'ip', 'status'];
+  constructor(public fb: FormBuilder) { }
 
-  ngOnInit() {
-    this.datasource = new ComputersTableDatasource();
-    this.computersService.fetchComputers().subscribe(computers => {
-      this.datasource.data = computers;
-      this.datasource.refresh();
-    });
+  selectedcomputer:any;
+
+  /*########### Form ###########*/
+  registrationForm = this.fb.group({
+    cityName: ['', [Validators.required]],
+    citysize: ['', [Validators.required]]
+  })
+
+
+  // Choose city using select dropdown
+  changeCity(e) {
+    console.log(e.value)
+    this.cityName.setValue(e.target.value, {
+      onlySelf: true
+    })
   }
 
-  ngAfterViewInit() {
-    this.datasource.sort = this.sort;
-    this.datasource.paginator = this.paginator;
-    this.table.dataSource = this.datasource;
+  getcomputerdata()
+  {    
+    this.selectedcomputer=JSON.stringify(this.registrationForm.value);        
   }
 
-  status(status: ComputerStatus): string {
-    return ComputerStatus.toString(status);
+  // Getter method to access formcontrols
+  get cityName() {
+    return this.registrationForm.get('cityName');
   }
+
+  /*########### Template Driven Form ###########*/
+  
+  onSubmit() {
+    this.isSubmitted = true;
+    if (!this.registrationForm.valid) {
+      return false;
+    } else {
+      (JSON.stringify(this.registrationForm.value))
+    }
+
+  }
+  
+
+  ngOnInit(): void {
+  }
+
 }
+
+//----
+
+

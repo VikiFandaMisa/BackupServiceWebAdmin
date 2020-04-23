@@ -12,8 +12,7 @@ export namespace ComputerStatus {
 
 export class ComputerModel {
     id: number;
-    hostname: string;
-    password: string;
+    hostname: string;    
     lastSeen: Date;
     ip: string;
     mac: string;
