@@ -23,4 +23,16 @@ export class ComputersService {
       }
     )
   }
+
+  putComputer(computer: ComputerModel): Observable<ComputerModel> { 
+    return this.http.put<ComputerModel>(
+      environment.server + "computers",
+      computer,
+      {
+        headers: new HttpHeaders({
+          'Authorization': this.auth.authorizationHeader
+        })
+      }
+    )
+  }
 }

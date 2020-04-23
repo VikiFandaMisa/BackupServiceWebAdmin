@@ -14,15 +14,14 @@
 					<div class="d-block my-3">
 
           <div class="mb-3">
-            <select class="custom-select" (change)="changeCity($event)" formControlName="cityName">
-              <option value="">Choose your city</option>
-              <option [class.selected]="city===selectedcomputer" *ngFor="let city of City" [ngValue]="city">{{city}}</option>                                       
+            <select class="custom-select" (change)="changeComputer($event)" formControlName="computer">
+              <option [class.selected]="computer===registrationForm.value" *ngFor="let computer of computers" [ngValue]="computer">{{ computer.hostname }}</option>                                       
             </select>
             
 
             <!-- error block -->
-            <div class="invalid-feedback" *ngIf="isSubmitted && cityName.errors?.required">
-              <sup>*</sup>Please enter your city name
+            <div class="invalid-feedback" *ngIf="isSubmitted && computer.errors?.required">
+              <sup>*</sup>Please enter your computer hostname
             </div>
           </div>            
 
@@ -30,8 +29,9 @@
         </div>
 
           <!-- Submit Button -->
+          <button type='submit'>Submit</button>
           <button (click)="getcomputerdata()" >GetData</button>
-          <p>{{selectedcomputer}}</p>
+          <p>{{ selectedcomputer }}</p>
       </form><!-- Form ends -->
 
     </div>
