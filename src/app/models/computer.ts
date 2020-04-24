@@ -1,12 +1,15 @@
-export enum ComputerStatus {
-    pending = 1,
-    approved = 2,
-    denied = 3
-}
+export const ComputerStatus: number[] = [1, 2, 3];
 
-export namespace ComputerStatus {
-    export function toString(status: ComputerStatus): string {
-        return ComputerStatus[status];
+export namespace ComputerStatusUtils {
+    export function toString(status: number): string {
+        switch(status) {
+            case 1:
+                return "pending";
+            case 2:
+                return "approved";
+            case 3:
+                return "denied"
+        }
     }
 }
 
@@ -16,5 +19,5 @@ export class ComputerModel {
     lastSeen: Date;
     ip: string;
     mac: string;
-    status: ComputerStatus;
+    status: number;
 }

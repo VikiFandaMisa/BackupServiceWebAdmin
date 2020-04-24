@@ -1,0 +1,23 @@
+<div class="container">
+	<div class="row custom-wrapper">
+		<div class="col-md-12">
+            <form [formGroup]="computerForm" (ngSubmit)="onSubmit()">
+                <div class="group-gap">
+                    <div class="d-block my-3">
+
+                        <div class="mb-3">
+                            <h1>{{ computer.hostname }}</h1>
+          
+                            <div class="mb-3">
+                                <select class="custom-select" (change)="changeStatus($event)" formControlName="status">
+                                    <option *ngFor="let status of computerStatus" [ngValue]="status">{{ statusToString(status) }}</option>
+                                </select>    
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+		</div>
+    </div>
+</div>

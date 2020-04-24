@@ -6,8 +6,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 
-
-
 import {A11yModule} from '@angular/cdk/a11y';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import {DragDropModule} from '@angular/cdk/drag-drop';
@@ -49,10 +47,9 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
-
+import {MatRadioModule} from '@angular/material/radio';
 
 import { ReactiveFormsModule } from '@angular/forms';
-
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -63,9 +60,7 @@ import { AccountsComponent } from './components/accounts/accounts.component';
 import { AccountsTableComponent } from './components/accounts/accounts-table/accounts-table.component';
 import { HomeComponent } from './components/home/home.component';
 import { ComputersComponent } from './components/computers/computers.component';
-import { ComputersTableComponent } from './components/computers/computers-table/computers-table.component';
-import {MatRadioModule} from '@angular/material/radio';
-
+import { ComputerFormComponent } from './components/computers/computer-form/computer-form.component';
 
 
 @NgModule({
@@ -79,7 +74,7 @@ import {MatRadioModule} from '@angular/material/radio';
     AccountsTableComponent,
     HomeComponent,
     ComputersComponent,
-    ComputersTableComponent
+    ComputerFormComponent
   ],
   imports: [    
     BrowserModule,
