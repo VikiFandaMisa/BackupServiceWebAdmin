@@ -1,0 +1,104 @@
+<form [formGroup]="TemplateForm" >
+    <h1>Template</h1>   
+   
+
+    <label>
+      Name:
+     <input type="text" formControlName="Name" required>
+   </label>    
+    
+
+    <div class="">
+      <label for="type">type</label>
+      <select id="types" class="form-control"
+          formControlName="type" required >
+        <option *ngFor="let t of types" [value]="t">{{t}}</option>
+        
+      </select>  
+    </div>    
+  
+    
+
+    <div formGroupName="Repeat">      
+      <h3>Repeat</h3>
+      <label>
+         Retence:
+        <input  type="number" formControlName="Retence">
+      </label>
+  
+      <label>
+        Start: 
+        <input type="date" formControlName="Start">
+      </label>
+      
+      <label>
+         End:
+        <input type="date" formControlName="End">
+      </label>          
+  
+      <label>
+        Period        
+      </label>
+    </div>
+
+    <label>
+      Hour<select (change)="SetHours($event.target.value)">
+        <option *ngFor="let i of hours">{{i}}</option>  
+      </select>Day<select (change)="Setdays($event.target.value)">
+        <option *ngFor="let i of Days_Of_Week">{{i}}</option>
+      </select>
+    </label>
+    <label>
+       Every x Hour:
+      <input type="text" formControlName="Cronhours" required>
+    </label>
+
+    <label>
+      At x hour of a day:<input type="text" formControlName="Name1" required>
+    </label>
+
+
+
+
+  
+    <div formArrayName="Paths">
+      <h3>Paths</h3> <button (click)="addPath()">Add Path</button>
+  
+      <div *ngFor="let Path of Paths.controls; let i=index">
+        <!-- The repeated alias template -->
+        <label>
+           Path:
+          <input type="text" [formControlName]="i">
+        </label>
+      </div>
+    </div>
+  
+    <button (click)="onSubmit(0)" >Submit Hour</button>
+    <button (click)="onSubmit(1)" >Submit Day/hour</button>
+        
+    
+    <p>
+      Form Value: {{ TemplateForm.value | json }}
+    </p>
+    
+    
+    <p>
+      Form Status: {{ TemplateForm.status }}
+    </p>
+    
+    <p>
+      <button type="reset">Reset Template</button>
+    </p>
+  </form>
+  
+  <hr>
+  
+  
+  
+  
+  
+  <!-- 
+  Copyright Google LLC. All Rights Reserved.
+  Use of this source code is governed by an MIT-style license that
+  can be found in the LICENSE file at http://angular.io/license
+  -->

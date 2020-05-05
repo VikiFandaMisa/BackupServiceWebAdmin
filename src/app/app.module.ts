@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-
+import { FormsModule } from '@angular/forms'
 import {A11yModule} from '@angular/cdk/a11y';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import {DragDropModule} from '@angular/cdk/drag-drop';
@@ -61,6 +61,7 @@ import { AccountsTableComponent } from './components/accounts/accounts-table/acc
 import { HomeComponent } from './components/home/home.component';
 import { ComputersComponent } from './components/computers/computers.component';
 import { ComputerFormComponent } from './components/computers/computer-form/computer-form.component';
+import { TemplateComponent } from './components/template/template.component';
 
 
 @NgModule({
@@ -74,9 +75,11 @@ import { ComputerFormComponent } from './components/computers/computer-form/comp
     AccountsTableComponent,
     HomeComponent,
     ComputersComponent,
-    ComputerFormComponent
+    ComputerFormComponent,
+    TemplateComponent
   ],
-  imports: [    
+  imports: [  
+    FormsModule,  
     BrowserModule,
     ReactiveFormsModule,
     BrowserModule,
