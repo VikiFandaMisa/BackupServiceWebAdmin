@@ -5,13 +5,15 @@ import { LoginComponent } from './components/login/login.component';
 import { AccountsComponent } from './components/accounts/accounts.component';
 import { HomeComponent } from './components/home/home.component';
 import { ComputersComponent } from './components/computers/computers.component';
+import { TemplateComponent } from './components/template/template.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'accounts', component: AccountsComponent },
-  { path: 'computers', component: ComputersComponent }
+  { path: 'computers', component: ComputersComponent },
+  { path: 'template', component: TemplateComponent }
 ];
 
 @NgModule({
