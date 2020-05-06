@@ -15,8 +15,21 @@
         <option *ngFor="let t of types" [value]="t">{{t}}</option>
         
       </select>  
-    </div>    
-  
+    </div>
+
+    <div class="">
+      <label for="Format">Format</label>
+      <select id="Formats" class="form-control"
+          formControlName="Format" required >
+        <option *ngFor="let t of Formats" [value]="t">{{t}}</option>
+        
+      </select>  
+    </div>  
+
+    
+
+    <!--<button  [disabled]="switched == 0" (click)="most()">ChangeName</button>
+    -->
     
 
     <div formGroupName="Repeat">      
@@ -40,29 +53,52 @@
         Period        
       </label>
     </div>
+    
+    <button  (click)="SwitchCron(0)">Hours</button>
+    <select  [disabled]="switched == 1"(change)="SetHours($event.target.value)" >
+      <option *ngFor="let i of hours">{{i}}</option>             
+    </select>
+    <div></div>   
 
-    <label>
-      Hour<select (change)="SetHours($event.target.value)">
-        <option *ngFor="let i of hours">{{i}}</option>  
-      </select>Day<select (change)="Setdays($event.target.value)">
-        <option *ngFor="let i of Days_Of_Week">{{i}}</option>
+    <button  (click)="SwitchCron(1)">Days</button>
+    <button  [disabled]="switched == 0" (click)="AddDayoftheweek(0)">0</button>
+    <button  [disabled]="switched == 0" (click)="AddDayoftheweek(1)">1</button>
+    <button  [disabled]="switched == 0" (click)="AddDayoftheweek(2)">2</button>
+    <button  [disabled]="switched == 0" (click)="AddDayoftheweek(3)">3</button>
+    <button  [disabled]="switched == 0" (click)="AddDayoftheweek(4)">4</button>
+    <button  [disabled]="switched == 0" (click)="AddDayoftheweek(5)">5</button>
+    <button  [disabled]="switched == 0" (click)="AddDayoftheweek(6)">6</button>
+    <div>Time   
+    
+      <select [disabled]="switched == 0"(change)="Sethours($event.target.value)" >            
+        <option *ngFor="let i of hours">{{i}}</option>
+      </select>  :
+      <select [disabled]="switched == 0"(change)="Setminutes($event.target.value)" >            
+        <option *ngFor="let i of minutes">{{i}}</option>
       </select>
-    </label>
-    <label>
-       Every x Hour:
-      <input type="text" formControlName="Cronhours" required>
-    </label>
+    </div>    
 
     <label>
-      At x hour of a day:<input type="text" formControlName="Name1" required>
+      At {{minute}} minutes at {{hour}} hour of a day:<input type="text" formControlName="Cron" required>
     </label>
 
+    <button   (click)="reset()">Reset</button>
 
 
-
+    <div formArrayName="Pathsfrom">
+      <h3>What To Backup</h3> <button (click)="addPath()">Add Path</button>
+  
+      <div *ngFor="let Path of Pathsfrom.controls; let x=index">
+        <!-- The repeated alias template -->
+        <label>
+           Path:
+          <input type="text" [formControlName]="x">
+        </label>
+      </div>
+    </div>
   
     <div formArrayName="Paths">
-      <h3>Paths</h3> <button (click)="addPath()">Add Path</button>
+      <h3>Target Path</h3> <button (click)="addPath()">Add Path</button>
   
       <div *ngFor="let Path of Paths.controls; let i=index">
         <!-- The repeated alias template -->
@@ -73,9 +109,7 @@
       </div>
     </div>
   
-    <button (click)="onSubmit(0)" >Submit Hour</button>
-    <button (click)="onSubmit(1)" >Submit Day/hour</button>
-        
+    <button (click)="onSubmit()" >Submit Template</button>       
     
     <p>
       Form Value: {{ TemplateForm.value | json }}
