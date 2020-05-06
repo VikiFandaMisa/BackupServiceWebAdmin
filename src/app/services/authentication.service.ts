@@ -48,6 +48,14 @@ export class AuthenticationService {
   }
 
   logout() {
+    this.http.delete(
+      environment.server + "token",
+      {
+        headers: new HttpHeaders({
+          'Authorization': this.authorizationHeader
+        })
+      }
+    ).subscribe();
     this.token = null;
     sessionStorage.clear();
   }
