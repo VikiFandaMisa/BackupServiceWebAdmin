@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵSWITCH_TEMPLATE_REF_FACTORY__POST_R3__ } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { FormArray } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { templateJitUrl } from '@angular/compiler';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
 
     
 
@@ -22,6 +23,8 @@ export class TemplateComponent implements OnInit {
   //value = 5
   types = ['1', '2', '3'];
   Formats =['1', '2'];
+  Timetypes=['hours','minutes'];
+  timetype=0;
 
   
 
@@ -31,9 +34,10 @@ export class TemplateComponent implements OnInit {
   minute='*';
   day='*';  
 
-
-  hourssaved = '*'
-  weeksaved = '*'
+  minutesaved='*';
+  hourssaved = '*';
+  weeksaved = '*';
+  savedvalue = '*';
   
   schoosecron = '0 1'.split(' ');
   minutes= ' 1 2 3 4 5 6 7 8 9 10 11 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60'.split(' ');
@@ -46,7 +50,8 @@ export class TemplateComponent implements OnInit {
     Name: ['', Validators.required],    
     Cron: ['', Validators.required],
     type: [''],
-    Format: [''],   
+    Format: [''],
+    Amount:[''],   
     Repeat: this.fb.group({
       Retence: [''],
       Start: [''],
@@ -59,6 +64,19 @@ export class TemplateComponent implements OnInit {
       this.fb.control('')
     ])
   });  
+
+  changeTimetype(value)
+  {
+    if (value=='hours') {
+      this.timetype=0;
+      this.Sethours();
+    }      
+    if (value=='minutes') {
+      this.timetype=1; 
+      this.Setminutes();
+    }
+  }
+
 
   AddDayoftheweek(value)
   {         
@@ -138,16 +156,56 @@ export class TemplateComponent implements OnInit {
     this.lastday = value;    
   }
 
-  Sethours(value)
+  setDecider(value)
   {
-    this.hour = value
-    this.getcron()
+    if (this.timetype==0) {
+      this.savedvalue=value;
+      this.Sethours();      
+    }   
+    else
+    {
+      this.savedvalue=value;
+      this.Setminutes();      
+    }
   }
 
-  Setminutes(value)
+  Minute_Hour_Switcher()
   {
-    this.minute = value
-    this.getcron()
+    if (this.timetype==0) {
+      this.Sethours()
+    }
+    else
+    { 
+      this.Setminutes
+    }
+  }
+
+  Sethours1(value)
+  {
+    this.hour=value;
+    this.getcron();
+  }
+
+  Setminutes1(value)
+  {
+    this.minute=value;
+    this.getcron();    
+  }
+
+  Sethours()
+  {
+    var textcron = '0 */'+this.savedvalue+' * *  '
+      this.TemplateForm.patchValue({
+        Cron: textcron,           
+    });
+  }
+
+  Setminutes()
+  {
+    var textcron = '*/' +this.savedvalue +' * * * * '
+      this.TemplateForm.patchValue({
+        Cron: textcron,           
+    });
   }
 
   reset()
@@ -157,26 +215,9 @@ export class TemplateComponent implements OnInit {
     this.day='*';
     this.getcron()
   }
-  
-
-
 
   getcron()
-  {
-    /*
-    if (this.day == '') {
-      var textcron = this.minute + ' '+ this.hour+ ' * * *'
-      this.TemplateForm.patchValue({
-        Cron: textcron,           
-      });
-    }
-    else{
-      var textcron = this.minute + ' '+ this.hour+ ' * * '+ this.day.substring(0,this.day.length-1)
-      this.TemplateForm.patchValue({
-        Cron: textcron,           
-      });
-    }   
-    */
+  {    
     if (this.day == '') {
       var textcron = this.minute + ' '+ this.hour+ ' * * *'
       this.TemplateForm.patchValue({
@@ -236,21 +277,29 @@ export class TemplateComponent implements OnInit {
   }
   get Paths() {
     return this.TemplateForm.get('Paths') as FormArray;
-  }
-
-  set Name(value)
-  {       
-    this.Name= value
-  }
+  }  
 
   addPath() {    
-    this.Paths.push(this.fb.control(''));    
-    this.Pathsfrom.push(this.fb.control(''))
+    this.Paths.push(this.fb.control(''));     
   }  
+
+  addPathfrom() {      
+    this.Pathsfrom.push(this.fb.control(''))
+  } 
 
   get Name()
   {
-    return this.TemplateForm.get('Name') as unknown as string;
+    return this.TemplateForm.get('Name');
+  }
+
+  changename()
+  {  
+    console.log(this.Amount);
+    this.Name.setValue(this.Amount.value);
+  }
+
+  get Amount() {    
+    return this.TemplateForm.get('Amount') as any
   }
 
   get Pathsfrom()
@@ -260,15 +309,21 @@ export class TemplateComponent implements OnInit {
 
 
   //submit = poslat template získat data 
-  onSubmit() {    
-      
+  onSubmit() {          
         var text= this.TemplateForm.get('type')       
         this.TemplateForm.patchValue({
           Name: text         
         });     
     
    
-  }   
+  }
+  /*   
+  ngOnChanges(changes: SimpleChanges): void {
+    this.computerForm = this.fb.group({
+      status: [this.computer.status, [Validators.required]]
+    })
+  }
+  */
   
 
   ngOnInit(): void {
