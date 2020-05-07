@@ -60,14 +60,13 @@
       </label>
     </div>
     
-    <button  (click)="SwitchCron(0)">Hours</button>
+    <button (click)="SwitchCron(0)">Hours</button>
     <label>
       Amount
-     <input (change)="setDecider($event.target.value)" type="text" formControlName="Amount">
-    
-    <select [disabled]="switched == 1"(change)="changeTimetype($event.target.value)" >            
-      <option *ngFor="let i of Timetypes">{{i}}</option>
-    </select>   
+      <input [attr.disabled]="switched == 1 || null" (change)="setDecider($event.target.value)" type="text" formControlName="Amount">
+      <select [disabled]="switched == 1" (change)="changeTimetype($event.target.value)" >            
+        <option *ngFor="let i of Timetypes">{{i}}</option>
+      </select>
     </label>
     <div></div>   
 
@@ -90,7 +89,7 @@
     </div>    
 
     <label>
-      At {{minute}} minutes at {{hour}} hour of a day:<input type="text" formControlName="Cron" required>
+      At {{minute}} minutes at {{hour}} hour of a day:<input readonly type="text" formControlName="Cron" required>
     </label>
 
     <button   (click)="reset()">Reset</button>
