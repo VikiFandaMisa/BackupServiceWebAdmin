@@ -16,7 +16,7 @@ export class AccountsService {
 
   constructor(private http: HttpClient, private auth:AuthenticationService) { }
 
-  fetchAccounts(): Observable<AccountModel[]> { 
+  getAccounts(): Observable<AccountModel[]> { 
     return this.http.get<AccountModel[]>(
       environment.server + "accounts",
       {
@@ -27,7 +27,7 @@ export class AccountsService {
     )
   }
 
-  fetchSelf(): Observable<AccountModel> {
+  getSelf(): Observable<AccountModel> {
     return this.http.get<AccountModel>(
       environment.server + "accounts/self",
       {
@@ -40,6 +40,41 @@ export class AccountsService {
         this.self = acc;
         return acc;
       })
+    )
+  }
+
+  postAccount(account: AccountModel): Observable<AccountModel> { 
+    return this.http.post<AccountModel>(
+      environment.server + "accounts",
+      account,
+      {
+        headers: new HttpHeaders({
+          'Authorization': this.auth.authorizationHeader
+        })
+      }
+    )
+  }
+  
+  putAccount(account: AccountModel): Observable<AccountModel> { 
+    return this.http.put<AccountModel>(
+      environment.server + "accounts",
+      account,
+      {
+        headers: new HttpHeaders({
+          'Authorization': this.auth.authorizationHeader
+        })
+      }
+    )
+  }
+
+  deleteAccount(account: AccountModel): Observable<AccountModel> { 
+    return this.http.delete<AccountModel>(
+      environment.server + "accounts/" + account.id,
+      {
+        headers: new HttpHeaders({
+          'Authorization': this.auth.authorizationHeader
+        })
+      }
     )
   }
 }

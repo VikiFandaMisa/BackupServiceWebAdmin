@@ -4,18 +4,18 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 
 import { AuthenticationService } from './authentication.service';
-import { ComputerModel } from '../models/computer';
+import { JobModel } from '../models/job';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ComputersService {
+export class JobsService {
   
   constructor(private http: HttpClient, private auth:AuthenticationService) { }
 
-  getComputers(): Observable<ComputerModel[]> { 
-    return this.http.get<ComputerModel[]>(
-      environment.server + "computers",
+  getJobs(): Observable<JobModel[]> { 
+    return this.http.get<JobModel[]>(
+      environment.server + "jobs",
       {
         headers: new HttpHeaders({
           'Authorization': this.auth.authorizationHeader
@@ -24,10 +24,10 @@ export class ComputersService {
     )
   }
 
-  postComputer(computer: ComputerModel): Observable<ComputerModel> { 
-    return this.http.post<ComputerModel>(
-      environment.server + "computers",
-      computer,
+  postJob(job: JobModel): Observable<JobModel> { 
+    return this.http.post<JobModel>(
+      environment.server + "jobs",
+      job,
       {
         headers: new HttpHeaders({
           'Authorization': this.auth.authorizationHeader
@@ -36,10 +36,10 @@ export class ComputersService {
     )
   }
 
-  putComputer(computer: ComputerModel): Observable<ComputerModel> { 
-    return this.http.put<ComputerModel>(
-      environment.server + "computers",
-      computer,
+  putJob(job: JobModel): Observable<JobModel> { 
+    return this.http.put<JobModel>(
+      environment.server + "jobs",
+      job,
       {
         headers: new HttpHeaders({
           'Authorization': this.auth.authorizationHeader
@@ -48,9 +48,9 @@ export class ComputersService {
     )
   }
 
-  deleteComputer(computer: ComputerModel): Observable<ComputerModel> { 
-    return this.http.delete<ComputerModel>(
-      environment.server + "computers/" + computer.id,
+  deleteJob(job: JobModel): Observable<JobModel> { 
+    return this.http.delete<JobModel>(
+      environment.server + "jobs/" + job.id,
       {
         headers: new HttpHeaders({
           'Authorization': this.auth.authorizationHeader

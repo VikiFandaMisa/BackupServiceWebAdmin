@@ -4,18 +4,18 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 
 import { AuthenticationService } from './authentication.service';
-import { ComputerModel } from '../models/computer';
+import { TemplateModel } from '../models/template';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ComputersService {
+export class TemplatesService {
   
   constructor(private http: HttpClient, private auth:AuthenticationService) { }
 
-  getComputers(): Observable<ComputerModel[]> { 
-    return this.http.get<ComputerModel[]>(
-      environment.server + "computers",
+  getTemplates(): Observable<TemplateModel[]> { 
+    return this.http.get<TemplateModel[]>(
+      environment.server + "templates",
       {
         headers: new HttpHeaders({
           'Authorization': this.auth.authorizationHeader
@@ -24,10 +24,10 @@ export class ComputersService {
     )
   }
 
-  postComputer(computer: ComputerModel): Observable<ComputerModel> { 
-    return this.http.post<ComputerModel>(
-      environment.server + "computers",
-      computer,
+  postTemplate(template: TemplateModel): Observable<TemplateModel> { 
+    return this.http.post<TemplateModel>(
+      environment.server + "templates",
+      template,
       {
         headers: new HttpHeaders({
           'Authorization': this.auth.authorizationHeader
@@ -36,10 +36,10 @@ export class ComputersService {
     )
   }
 
-  putComputer(computer: ComputerModel): Observable<ComputerModel> { 
-    return this.http.put<ComputerModel>(
-      environment.server + "computers",
-      computer,
+  putTemplate(template: TemplateModel): Observable<TemplateModel> { 
+    return this.http.put<TemplateModel>(
+      environment.server + "templates",
+      template,
       {
         headers: new HttpHeaders({
           'Authorization': this.auth.authorizationHeader
@@ -48,9 +48,9 @@ export class ComputersService {
     )
   }
 
-  deleteComputer(computer: ComputerModel): Observable<ComputerModel> { 
-    return this.http.delete<ComputerModel>(
-      environment.server + "computers/" + computer.id,
+  deleteTemplate(template: TemplateModel): Observable<TemplateModel> { 
+    return this.http.delete<TemplateModel>(
+      environment.server + "templates/" + template.id,
       {
         headers: new HttpHeaders({
           'Authorization': this.auth.authorizationHeader

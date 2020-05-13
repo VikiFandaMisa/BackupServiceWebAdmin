@@ -26,7 +26,7 @@ export class AccountsTableComponent implements OnInit {
 
   ngOnInit() {
     this.datasource = new AccountsTableDatasource();
-    this.acc.fetchAccounts().subscribe(accounts => {
+    this.acc.getAccounts().subscribe(accounts => {
       this.datasource.data = accounts;
       this.datasource.refresh();
     });
