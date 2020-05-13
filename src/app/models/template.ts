@@ -1,3 +1,5 @@
+import { PathModel } from './path';
+
 export const BackupType: number[] = [1, 2, 3];
 export const BackupFileType: number[] = [1, 2];
 
@@ -33,6 +35,7 @@ export class TemplateModel {
     retention: number;
     email: string;
     sendReports: boolean;
-    reportPeriod: string;   
-        
+    reportPeriod: string;
+    sources: PathModel[];
+    targets: PathModel[];
 }
