@@ -1,25 +1,23 @@
+import { Component, ViewChild, OnInit } from '@angular/core';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatTable} from '@angular/material/table';
+import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import {SelectionModel} from '@angular/cdk/collections';
-import { Component, OnInit } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
+import { templateJitUrl } from '@angular/compiler';
 
-export interface TemplateClient {
+
+export interface UsersData {  
+  id: number;
+  client: string;
   template: string;
-  position: number;
-  client: number;
-  symbol: string;
 }
 
-const ELEMENT_DATA: TemplateClient[] = [
-  {position: 1, template: 'Hydrogen', client: 1.0079, symbol: 'H'},
-  {position: 2, template: 'Helium', client: 4.0026, symbol: 'He'},
-  {position: 3, template: 'Lithium', client: 6.941, symbol: 'Li'},
-  {position: 4, template: 'Beryllium', client: 9.0122, symbol: 'Be'},
-  {position: 5, template: 'Boron', client: 10.811, symbol: 'B'},
-  {position: 6, template: 'Carbon', client: 12.0107, symbol: 'C'},
-  {position: 7, template: 'Nitrogen', client: 14.0067, symbol: 'N'},
-  {position: 8, template: 'Oxygen', client: 15.9994, symbol: 'O'},
-  {position: 9, template: 'Fluorine', client: 18.9984, symbol: 'F'},
-  {position: 10, template: 'Neon', client: 20.1797, symbol: 'Ne'},
+const ELEMENT_DATA: UsersData[] = [
+  {id: 1,template:'fullbackucp', client: 'Windows10'},
+  {id: 2,template: 'fullbackup', client: 'Windows8'},
+  {id: 3,template: 'fullbackup', client: 'Winodws8'},
+  {id: 4,template: 'fullbackup', client: 'Windows7'}
 ];
 
 @Component({
@@ -28,33 +26,84 @@ const ELEMENT_DATA: TemplateClient[] = [
   styleUrls: ['./jobs.component.scss']
 })
 export class JobsComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'template', 'client','active'];
-  dataSource = new MatTableDataSource<TemplateClient>(ELEMENT_DATA);
-  selection = new SelectionModel<TemplateClient>(true, []);
+  displayedColumns: string[] = ['id','template', 'client', 'action','active' ];
+  dataSource = ELEMENT_DATA;
+  counter = 5;
+  dataSource1 = new MatTableDataSource<UsersData>(ELEMENT_DATA);
+  selection = new SelectionModel<UsersData>(true, []);
 
-  /** Whether the number of selected elements matches the total number of rows. */
+  @ViewChild(MatTable,{static:true}) table: MatTable<any>;
+
+  constructor(public dialog: MatDialog) {}
+
+  openDialog(action,obj) {
+    obj.action = action;
+    const dialogRef = this.dialog.open(DialogBoxComponent, {
+      width: '250px',
+      data:obj
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result.event == 'Add'){
+        this.addRowData(result.data);
+      }else if(result.event == 'Update'){
+        this.updateRowData(result.data);
+      }else if(result.event == 'Delete'){
+        this.deleteRowData(result.data);
+      }
+    });
+  }
+
+  addRowData(row_obj){
+    var d = new Date();
+    this.dataSource.push({
+      id: this.counter,      
+      client:row_obj.name,
+      template: row_obj.template,
+    });
+    this.counter = this.counter+1
+    this.table.renderRows();
+    
+  }
+  updateRowData(row_obj){
+    this.dataSource = this.dataSource.filter((value,key)=>{
+      if(value.id == row_obj.id){
+        value.client = row_obj.name;
+        value.template = row_obj.template;
+      }
+      return true;
+    });
+  }
+  deleteRowData(row_obj){
+    this.dataSource = this.dataSource.filter((value,key)=>{
+      return value.id != row_obj.id;
+    });
+  }  
+
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
+    const numRows = this.dataSource1.data.length;
     return numSelected === numRows;
   }
 
-   /** Selects all rows if they are not all selected; otherwise clear selection. */
-   masterToggle() {
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
     this.isAllSelected() ?
         this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
+        this.dataSource1.data.forEach(row => this.selection.select(row));
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: TemplateClient): string {
+  checkboxLabel(row?: UsersData): string {
     if (!row) {
-      return `${this.isAllSelected() ? 'client' : 'deselect'} all`;
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'client'} row ${row.position + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
-  constructor() { }
+  
+
+ 
 
   ngOnInit(): void {
   }
