@@ -111,9 +111,9 @@ export class JobsComponent implements OnInit {
     newJobAdd.id = row_obj.id;
     newJobAdd.computerID = Number(row_obj.name);
     newJobAdd.templateID = Number(row_obj.template);
-    newJobAdd.active = true;  
+    newJobAdd.active = row_obj.active; 
     console.log(newJobAdd);
-    this.jobsService.putJob(this.newjob).subscribe(job => this.table.renderRows());
+    this.jobsService.putJob(newJobAdd).subscribe(job => this.table.renderRows());
     /*this.table.renderRows();    */
     this.table.renderRows();
 
@@ -122,7 +122,13 @@ export class JobsComponent implements OnInit {
     this.dataSource = this.dataSource.filter((value,key)=>{
       return value.id != row_obj.id;      
     });
-    this.jobsService.deleteJob(row_obj.id).subscribe();
+    let newJobAdd:JobModel = new JobModel();
+    newJobAdd.id = row_obj.id;
+    newJobAdd.computerID = Number(row_obj.name);
+    newJobAdd.templateID = Number(row_obj.template);
+    newJobAdd.active = true; 
+
+    this.jobsService.deleteJob(newJobAdd).subscribe(job => this.table.renderRows());
   }  
 
   isAllSelected() {
