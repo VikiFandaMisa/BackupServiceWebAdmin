@@ -57,7 +57,7 @@ export class AccountsService {
   
   putAccount(account: AccountModel): Observable<AccountModel> { 
     return this.http.put<AccountModel>(
-      environment.server + "accounts",
+      environment.server + "accounts/" + account.id,
       account,
       {
         headers: new HttpHeaders({
