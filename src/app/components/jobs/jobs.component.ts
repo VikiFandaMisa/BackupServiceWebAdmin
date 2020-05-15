@@ -113,11 +113,15 @@ export class JobsComponent implements OnInit {
     newJobAdd.templateID = Number(row_obj.template);
     newJobAdd.active = row_obj.active; 
     console.log(newJobAdd);
-    this.jobsService.putJob(newJobAdd).subscribe(job => this.table.renderRows());
-    /*this.table.renderRows();    */
-    this.table.renderRows();
-
+    this.jobsService.putJob(newJobAdd).subscribe(job => {this.table.renderRows(),this.refreshjobs()});
+    /*this.table.renderRows();    */    
   }
+  refreshjobs()
+  {
+    this.jobsService.getJobs().subscribe( jobs => {this.dataSource=jobs,this.table.renderRows();} );
+  }
+
+
   deleteRowData(row_obj){
     this.dataSource = this.dataSource.filter((value,key)=>{
       return value.id != row_obj.id;      
@@ -133,7 +137,7 @@ export class JobsComponent implements OnInit {
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource1.data.length;
+    const numRows = this.dataSource.length;
     return numSelected === numRows;
   }
 
@@ -141,7 +145,7 @@ export class JobsComponent implements OnInit {
   masterToggle() {
     this.isAllSelected() ?
         this.selection.clear() :
-        this.dataSource1.data.forEach(row => this.selection.select(row));
+        this.dataSource.forEach(row => this.selection.select(row));
   }
 
   /** The label for the checkbox on the passed row */
@@ -149,7 +153,7 @@ export class JobsComponent implements OnInit {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'}`;
   }
   /*checkboxLabel(row?: UsersData): string {
     if (!row) {

@@ -37,12 +37,10 @@
     <ng-container matColumnDef="active">
       <th mat-header-cell *matHeaderCellDef> Active      
       </th>
-      <td mat-cell *matCellDef="let row">
-        <mat-checkbox                                            
-                     (click)="$event.stopPropagation()"
-                      (change)="$event ? selection.toggle(row) : null"
-                      [checked]="selection.isSelected(row)"
-                      [aria-label]="checkboxLabel(row)">                      
+      <td mat-cell *matCellDef="let element"> 
+        <mat-checkbox                                
+                      [checked]="element.active"
+                      [aria-label]="checkboxLabel(element.active)">                      
         </mat-checkbox>        
       </td>
     </ng-container>
