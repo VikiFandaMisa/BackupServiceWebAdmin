@@ -84,10 +84,10 @@ export class JobsComponent implements OnInit {
     */
 
     let newJobAdd:JobModel = new JobModel();
-    newJobAdd.id = 0;
+    newJobAdd.id = row_obj.id;
     newJobAdd.computerID = Number(row_obj.name);
     newJobAdd.templateID = Number(row_obj.template);
-    newJobAdd.active = true; 
+    newJobAdd.active = row_obj.active; 
 
     
     console.log(newJobAdd);
@@ -108,7 +108,7 @@ export class JobsComponent implements OnInit {
     });
     
     let newJobAdd:JobModel = new JobModel();
-    newJobAdd.id = row_obj.id;
+    newJobAdd.id = 0;
     newJobAdd.computerID = Number(row_obj.name);
     newJobAdd.templateID = Number(row_obj.template);
     newJobAdd.active = row_obj.active; 
