@@ -31,8 +31,8 @@ export class TemplateComponent implements OnInit {
 
   switched = 0 ;  
   lastday='';
-  hour='*';
-  minute='*';
+  hour='0';
+  minute='0';
   day='*';  
 
   minutesaved='*';
