@@ -24,7 +24,7 @@ export class TemplateComponent implements OnInit {
   //value = 5
   types = [1, 2, 3];
   Formats =[1,2];
-  Timetypes=['hours','minutes'];
+  Timetypes=['hours','minutes','days','months'];
   timetype=0;
 
   
@@ -75,7 +75,15 @@ export class TemplateComponent implements OnInit {
     if (value=='minutes') {
       this.timetype=1; 
       this.Setminutes();
-    }    
+    }
+    if (value=='days') {
+      this.timetype=2; 
+      this.Setdays();
+    }   
+    if (value=='months') {
+      this.timetype=3; 
+      this.Setdays();
+    }      
   }
 
 
@@ -163,10 +171,20 @@ export class TemplateComponent implements OnInit {
       this.savedvalue=value;
       this.Sethours();      
     }   
-    else
+    else if(this.timetype == 1)
     {
       this.savedvalue=value;
       this.Setminutes();      
+    }
+    else if(this.timetype == 2)
+    {
+      this.savedvalue=value;
+      this.Setdays();      
+    }
+    else if(this.timetype == 3)
+    {
+      this.savedvalue=value;
+      this.Setmonth();      
     }
   }
 
@@ -175,9 +193,17 @@ export class TemplateComponent implements OnInit {
     if (this.timetype==0) {
       this.Sethours()
     }
-    else
+    else if(this.timetype==1)
     { 
       this.Setminutes
+    }
+    else if(this.timetype==2)
+    { 
+      this.Setdays
+    }
+    else if(this.timetype==3)
+    { 
+      this.Setmonth
     }
   }
 
@@ -195,7 +221,7 @@ export class TemplateComponent implements OnInit {
 
   Sethours()
   {
-    var textcron = '0 */'+this.savedvalue+' * *  '
+    var textcron = '0 */'+this.savedvalue+' * * *'
       this.TemplateForm.patchValue({
         Cron: textcron,           
     });
@@ -203,7 +229,23 @@ export class TemplateComponent implements OnInit {
 
   Setminutes()
   {
-    var textcron = '*/' +this.savedvalue +' * * * * '
+    var textcron = '*/' +this.savedvalue +' * * * *'
+      this.TemplateForm.patchValue({
+        Cron: textcron,           
+    });
+  }
+
+  Setdays()
+  {
+    var textcron = '0 0 '+'*/'+this.savedvalue +' * *'    
+      this.TemplateForm.patchValue({
+        Cron: textcron,           
+    });
+  }
+
+  Setmonth()
+  {
+    var textcron = '0 0 1 '+'*/'+this.savedvalue +' *'    
       this.TemplateForm.patchValue({
         Cron: textcron,           
     });
@@ -246,16 +288,6 @@ export class TemplateComponent implements OnInit {
     //this.GetWeekCron(this.weeksaved);    
     //var text = ''    
     
-  }
-
-  Setdays(newValue) {   
-    if (newValue == 'everyday') {
-      this.weeksaved = '*'      
-    } else {
-      this.weeksaved = newValue 
-      
-    }     
-    this.GetWeekCron(this.weeksaved);      
   }
 
   
