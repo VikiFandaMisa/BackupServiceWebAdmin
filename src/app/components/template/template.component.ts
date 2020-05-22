@@ -24,7 +24,7 @@ export class TemplateComponent implements OnInit {
   //value = 5
   types = [1, 2, 3];
   Formats =[1,2];
-  Timetypes=['hours','minutes','days','months'];
+  Timetypes=['minutes','hours','days','months'];
   timetype=0;
 
   
