@@ -82,7 +82,7 @@ export class TemplateComponent implements OnInit {
     }   
     if (value=='months') {
       this.timetype=3; 
-      this.Setdays();
+      this.Setmonth();
     }      
   }
 
