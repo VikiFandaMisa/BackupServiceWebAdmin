@@ -318,7 +318,7 @@ export class TemplateComponent implements OnInit {
 
          let pathfrom:PathModel = new PathModel();
          pathfrom.id=0;
-         pathfrom.dierectory= control.value;        
+         pathfrom.directory= control.value;        
          pathfrom.ftp='';
          arrayofsources.push(pathfrom);         
     }
@@ -326,7 +326,7 @@ export class TemplateComponent implements OnInit {
 
       let pathtarget:PathModel = new PathModel();
       pathtarget.id=0;
-      pathtarget.dierectory= control.value;        
+      pathtarget.directory  = control.value;        
       pathtarget.ftp='';
       arrayoftargets.push(pathtarget);         
     }
@@ -341,7 +341,6 @@ export class TemplateComponent implements OnInit {
     newTemplateAdd.period = this.TemplateForm.get('Cron').value,
     newTemplateAdd.sources = arrayofsources;
     newTemplateAdd.targets = arrayoftargets;
-
     console.log(newTemplateAdd);
 
     this.TemplateService.postTemplate(newTemplateAdd).subscribe(  ); 
