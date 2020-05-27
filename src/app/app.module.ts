@@ -62,6 +62,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ComputersComponent } from './components/computers/computers.component';
 import { ComputerFormComponent } from './components/computers/computer-form/computer-form.component';
 import { TemplateComponent } from './components/template/template.component';
+import { JobsComponent } from './components/jobs/jobs.component';
 
 
 @NgModule({
@@ -76,7 +77,8 @@ import { TemplateComponent } from './components/template/template.component';
     HomeComponent,
     ComputersComponent,
     ComputerFormComponent,
-    TemplateComponent
+    TemplateComponent,
+    JobsComponent
   ],
   imports: [  
     FormsModule,  

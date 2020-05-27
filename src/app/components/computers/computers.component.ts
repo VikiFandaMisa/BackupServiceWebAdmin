@@ -35,7 +35,7 @@ export class ComputersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.computersService.fetchComputers().subscribe(computers => { this.computersArray = computers; });
+    this.computersService.getComputers().subscribe(computers => { this.computersArray = computers; });
   }
 
 }
