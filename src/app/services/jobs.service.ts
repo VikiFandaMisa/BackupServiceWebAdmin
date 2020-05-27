@@ -24,6 +24,17 @@ export class JobsService {
     )
   }
 
+  getJob(id: number): Observable<JobModel> { 
+    return this.http.get<JobModel>(
+      environment.server + "jobs/" + id,
+      {
+        headers: new HttpHeaders({
+          'Authorization': this.auth.authorizationHeader
+        })
+      }
+    )
+  }
+
   postJob(job: JobModel): Observable<JobModel> { 
     return this.http.post<JobModel>(
       environment.server + "jobs",

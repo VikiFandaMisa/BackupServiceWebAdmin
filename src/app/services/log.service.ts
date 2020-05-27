@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 
 import { AuthenticationService } from './authentication.service';
-import { LogItem } from '../models/logItem';
+import { LogItemModel } from '../models/logItem';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +13,8 @@ export class LogService {
   
   constructor(private http: HttpClient, private auth:AuthenticationService) { }
 
-  getComputers(): Observable<LogItem[]> { 
-    return this.http.get<LogItem[]>(
+  getLog(): Observable<LogItemModel[]> { 
+    return this.http.get<LogItemModel[]>(
       environment.server + "log",
       {
         headers: new HttpHeaders({
@@ -24,8 +24,19 @@ export class LogService {
     )
   }
 
-  deleteItem(item: LogItem): Observable<LogItem> { 
-    return this.http.delete<LogItem>(
+  getLogItem(id: number): Observable<LogItemModel> { 
+    return this.http.get<LogItemModel>(
+      environment.server + "log/" + id,
+      {
+        headers: new HttpHeaders({
+          'Authorization': this.auth.authorizationHeader
+        })
+      }
+    )
+  }
+
+  deleteItem(item: LogItemModel): Observable<LogItemModel> { 
+    return this.http.delete<LogItemModel>(
       environment.server + "log/" + item.id,
       {
         headers: new HttpHeaders({

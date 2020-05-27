@@ -27,6 +27,17 @@ export class AccountsService {
     )
   }
 
+  getAccount(id: number): Observable<AccountModel> { 
+    return this.http.get<AccountModel>(
+      environment.server + "accounts/" + id,
+      {
+        headers: new HttpHeaders({
+          'Authorization': this.auth.authorizationHeader
+        })
+      }
+    )
+  }
+
   getSelf(): Observable<AccountModel> {
     return this.http.get<AccountModel>(
       environment.server + "accounts/self",

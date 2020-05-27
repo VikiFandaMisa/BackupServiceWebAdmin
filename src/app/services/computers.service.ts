@@ -24,6 +24,17 @@ export class ComputersService {
     )
   }
 
+  getComputer(id: number): Observable<ComputerModel> { 
+    return this.http.get<ComputerModel>(
+      environment.server + "computers/" + id,
+      {
+        headers: new HttpHeaders({
+          'Authorization': this.auth.authorizationHeader
+        })
+      }
+    )
+  }
+
   postComputer(computer: ComputerModel): Observable<ComputerModel> { 
     return this.http.post<ComputerModel>(
       environment.server + "computers",

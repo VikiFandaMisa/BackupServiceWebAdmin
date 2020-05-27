@@ -13,7 +13,7 @@ export namespace MessageTypeUtils {
     }
 }
 
-export class LogItem {
+export class LogItemModel {
     id: number; 
     jobID: number;
     type: number;

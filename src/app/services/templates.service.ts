@@ -24,6 +24,17 @@ export class TemplatesService {
     )
   }
 
+  getTemplate(id: number): Observable<TemplateModel> { 
+    return this.http.get<TemplateModel>(
+      environment.server + "templates/" + id,
+      {
+        headers: new HttpHeaders({
+          'Authorization': this.auth.authorizationHeader
+        })
+      }
+    )
+  }
+
   postTemplate(template: TemplateModel): Observable<TemplateModel> { 
     return this.http.post<TemplateModel>(
       environment.server + "templates",
