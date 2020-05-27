@@ -351,7 +351,7 @@ export class TemplateComponent implements OnInit {
          let pathfrom:PathModel = new PathModel();
          pathfrom.id=0;
          pathfrom.directory= control.value;        
-         pathfrom.ftp='';
+         pathfrom.network='';
          arrayofsources.push(pathfrom);         
     }
     for (let control of this.Paths.controls) {     
@@ -359,7 +359,7 @@ export class TemplateComponent implements OnInit {
       let pathtarget:PathModel = new PathModel();
       pathtarget.id=0;
       pathtarget.directory  = control.value;        
-      pathtarget.ftp='';
+      pathtarget.network='';
       arrayoftargets.push(pathtarget);         
     }
     
