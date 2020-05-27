@@ -5,8 +5,9 @@ import { FormArray } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { templateJitUrl } from '@angular/compiler';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-
-
+import { TemplateModel } from 'src/app/models/template';
+import { PathModel } from 'src/app/models/path';
+import { TemplatesService } from 'src/app/services/templates.service';
     
 
 @Component({
@@ -21,17 +22,17 @@ export class TemplateComponent implements OnInit {
   showfield = false;
 
   //value = 5
-  types = ['1', '2', '3'];
-  Formats =['1', '2'];
-  Timetypes=['hours','minutes'];
+  types = [1, 2, 3];
+  Formats =[1,2];
+  Timetypes=['minutes','hours','days','months'];
   timetype=0;
 
   
 
   switched = 0 ;  
   lastday='';
-  hour='*';
-  minute='*';
+  hour='0';
+  minute='0';
   day='*';  
 
   minutesaved='*';
@@ -75,6 +76,14 @@ export class TemplateComponent implements OnInit {
       this.timetype=1; 
       this.Setminutes();
     }
+    if (value=='days') {
+      this.timetype=2; 
+      this.Setdays();
+    }   
+    if (value=='months') {
+      this.timetype=3; 
+      this.Setmonth();
+    }      
   }
 
 
@@ -162,10 +171,20 @@ export class TemplateComponent implements OnInit {
       this.savedvalue=value;
       this.Sethours();      
     }   
-    else
+    else if(this.timetype == 1)
     {
       this.savedvalue=value;
       this.Setminutes();      
+    }
+    else if(this.timetype == 2)
+    {
+      this.savedvalue=value;
+      this.Setdays();      
+    }
+    else if(this.timetype == 3)
+    {
+      this.savedvalue=value;
+      this.Setmonth();      
     }
   }
 
@@ -174,9 +193,17 @@ export class TemplateComponent implements OnInit {
     if (this.timetype==0) {
       this.Sethours()
     }
-    else
+    else if(this.timetype==1)
     { 
       this.Setminutes
+    }
+    else if(this.timetype==2)
+    { 
+      this.Setdays
+    }
+    else if(this.timetype==3)
+    { 
+      this.Setmonth
     }
   }
 
@@ -194,7 +221,7 @@ export class TemplateComponent implements OnInit {
 
   Sethours()
   {
-    var textcron = '0 */'+this.savedvalue+' * *  '
+    var textcron = '0 */'+this.savedvalue+' * * *'
       this.TemplateForm.patchValue({
         Cron: textcron,           
     });
@@ -202,7 +229,23 @@ export class TemplateComponent implements OnInit {
 
   Setminutes()
   {
-    var textcron = '*/' +this.savedvalue +' * * * * '
+    var textcron = '*/' +this.savedvalue +' * * * *'
+      this.TemplateForm.patchValue({
+        Cron: textcron,           
+    });
+  }
+
+  Setdays()
+  {
+    var textcron = '0 0 '+'*/'+this.savedvalue +' * *'    
+      this.TemplateForm.patchValue({
+        Cron: textcron,           
+    });
+  }
+
+  Setmonth()
+  {
+    var textcron = '0 0 1 '+'*/'+this.savedvalue +' *'    
       this.TemplateForm.patchValue({
         Cron: textcron,           
     });
@@ -247,18 +290,8 @@ export class TemplateComponent implements OnInit {
     
   }
 
-  Setdays(newValue) {   
-    if (newValue == 'everyday') {
-      this.weeksaved = '*'      
-    } else {
-      this.weeksaved = newValue 
-      
-    }     
-    this.GetWeekCron(this.weeksaved);      
-  }
-
   
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,private TemplateService:TemplatesService ) { }
 
   GetCronHours(value: string) {
     var hourscron:string ='0 */'+value+' * * *'
@@ -309,11 +342,42 @@ export class TemplateComponent implements OnInit {
 
 
   //submit = poslat template získat data 
-  onSubmit() {          
-        var text= this.TemplateForm.get('type')       
-        this.TemplateForm.patchValue({
-          Name: text         
-        });     
+  onSubmit() { 
+    let newTemplateAdd:TemplateModel = new TemplateModel();    
+    let arrayofsources:PathModel[] = [];
+    let arrayoftargets:PathModel[] = [];
+    for (let control of this.Pathsfrom.controls) {     
+
+         let pathfrom:PathModel = new PathModel();
+         pathfrom.id=0;
+         pathfrom.directory= control.value;        
+         pathfrom.ftp='';
+         arrayofsources.push(pathfrom);         
+    }
+    for (let control of this.Paths.controls) {     
+
+      let pathtarget:PathModel = new PathModel();
+      pathtarget.id=0;
+      pathtarget.directory  = control.value;        
+      pathtarget.ftp='';
+      arrayoftargets.push(pathtarget);         
+    }
+    
+    newTemplateAdd.id = 0;
+    newTemplateAdd.name = this.TemplateForm.get('Name').value, 
+    newTemplateAdd.type = Number(this.TemplateForm.get('type').value) ,     
+    newTemplateAdd.targetFileType =Number( this.TemplateForm.get('Format').value),
+    newTemplateAdd.retention = this.TemplateForm.get('Repeat.Retence').value,
+    newTemplateAdd.start = this.TemplateForm.get('Repeat.Start').value,
+    newTemplateAdd.end = this.TemplateForm.get('Repeat.End').value,
+    newTemplateAdd.period = this.TemplateForm.get('Cron').value,
+    newTemplateAdd.sources = arrayofsources;
+    newTemplateAdd.targets = arrayoftargets;
+    console.log(newTemplateAdd);
+
+    this.TemplateService.postTemplate(newTemplateAdd).subscribe(  ); 
+    
+
     
    
   }

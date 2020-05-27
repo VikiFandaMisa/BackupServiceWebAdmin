@@ -63,6 +63,8 @@ import { ComputersComponent } from './components/computers/computers.component';
 import { ComputerFormComponent } from './components/computers/computer-form/computer-form.component';
 import { TemplateComponent } from './components/template/template.component';
 import { JobsComponent } from './components/jobs/jobs.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { DialogBoxComponent } from './components/jobs/dialog-box/dialog-box.component';
 
 
 @NgModule({
@@ -78,9 +80,19 @@ import { JobsComponent } from './components/jobs/jobs.component';
     ComputersComponent,
     ComputerFormComponent,
     TemplateComponent,
-    JobsComponent
+    JobsComponent,
+    DialogBoxComponent
   ],
   imports: [  
+    BrowserModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    MatTableModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatInputModule,
     FormsModule,  
     BrowserModule,
     ReactiveFormsModule,

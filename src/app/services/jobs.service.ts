@@ -38,7 +38,7 @@ export class JobsService {
 
   putJob(job: JobModel): Observable<JobModel> { 
     return this.http.put<JobModel>(
-      environment.server + "jobs",
+      environment.server + "jobs/" + job.id,
       job,
       {
         headers: new HttpHeaders({

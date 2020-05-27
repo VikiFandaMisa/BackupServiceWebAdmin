@@ -1,26 +1,34 @@
+import { Component, ViewChild, OnInit } from '@angular/core';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatTable} from '@angular/material/table';
+import {DialogBoxComponent } from './dialog-box/dialog-box.component';
 import {SelectionModel} from '@angular/cdk/collections';
-import { Component, OnInit } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
+import {JobModel} from 'src/app/models/job';
+import {JobsService} from 'src/app/services/jobs.service';
+import { templateJitUrl } from '@angular/compiler';
+import { NgModel } from '@angular/forms';
 
-export interface TemplateClient {
+
+/*
+export interface UsersData {  
+  id: number;
+  client: string;
   template: string;
-  position: number;
-  client: number;
-  symbol: string;
 }
 
-const ELEMENT_DATA: TemplateClient[] = [
-  {position: 1, template: 'Hydrogen', client: 1.0079, symbol: 'H'},
-  {position: 2, template: 'Helium', client: 4.0026, symbol: 'He'},
-  {position: 3, template: 'Lithium', client: 6.941, symbol: 'Li'},
-  {position: 4, template: 'Beryllium', client: 9.0122, symbol: 'Be'},
-  {position: 5, template: 'Boron', client: 10.811, symbol: 'B'},
-  {position: 6, template: 'Carbon', client: 12.0107, symbol: 'C'},
-  {position: 7, template: 'Nitrogen', client: 14.0067, symbol: 'N'},
-  {position: 8, template: 'Oxygen', client: 15.9994, symbol: 'O'},
-  {position: 9, template: 'Fluorine', client: 18.9984, symbol: 'F'},
-  {position: 10, template: 'Neon', client: 20.1797, symbol: 'Ne'},
+
+const ELEMENT_DATA: UsersData[] = [
+  {id: 1,template:'fullbackucp', client: 'Windows10'},
+  {id: 2,template: 'fullbackup', client: 'Windows8'},
+  {id: 3,template: 'fullbackup', client: 'Winodws8'},
+  {id: 4,template: 'fullbackup', client: 'Windows7'}
 ];
+*/
+
+
+
+const ELEMENT_DATA: JobModel[] = [];
 
 @Component({
   selector: 'app-jobs',
@@ -28,35 +36,139 @@ const ELEMENT_DATA: TemplateClient[] = [
   styleUrls: ['./jobs.component.scss']
 })
 export class JobsComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'template', 'client','active'];
-  dataSource = new MatTableDataSource<TemplateClient>(ELEMENT_DATA);
-  selection = new SelectionModel<TemplateClient>(true, []);
+  displayedColumns: string[] = ['id','template', 'client', 'action','active' ];
+  dataSource = ELEMENT_DATA;
+  counter = 5;
+  /*
+  dataSource1 = new MatTableDataSource<UsersData>(ELEMENT_DATA);
+  selection = new SelectionModel<UsersData>(true, []);
+  */
+  dataSource1 = new MatTableDataSource<JobModel>(ELEMENT_DATA);
+  selection = new SelectionModel<JobModel>(true, []);
+  newjob = new JobModel;
+  newjobni()
+  {
+    this.newjob.templateID=0
+    /*this.jobsService.postJob()*/
+  }
 
-  /** Whether the number of selected elements matches the total number of rows. */
+  @ViewChild(MatTable,{static:true}) table: MatTable<any>;
+
+  constructor(public dialog: MatDialog, private jobsService: JobsService) {}
+
+  openDialog(action,obj) {
+    obj.action = action;
+    const dialogRef = this.dialog.open(DialogBoxComponent, {
+      width: '250px',
+      data:obj
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result.event == 'Add'){
+        this.addRowData(result.data);
+      }else if(result.event == 'Update'){
+        this.updateRowData(result.data);
+      }else if(result.event == 'Delete'){
+        this.deleteRowData(result.data);
+      }
+    });
+  }
+
+  addRowData(row_obj){
+   /* var d = new Date();
+    this.dataSource.push({
+      id: this.counter,      
+      client:row_obj.name,
+      template: row_obj.template,
+    });
+    */
+
+    let newJobAdd:JobModel = new JobModel();
+    newJobAdd.id = 0;
+    newJobAdd.computerID = Number(row_obj.name);
+    newJobAdd.templateID = Number(row_obj.template);
+    newJobAdd.active = row_obj.active; 
+
+    
+    console.log(newJobAdd);
+      
+   
+    this.jobsService.postJob(newJobAdd).subscribe( job => {this.dataSource.push(job),this.table.renderRows();} )
+
+   /*this.table.renderRows();    */
+    
+  }
+  updateRowData(row_obj){
+    this.dataSource = this.dataSource.filter((value,key)=>{
+      if(value.id == row_obj.id){
+        value.computerID = row_obj.name;
+        value.templateID = row_obj.template;
+      }
+      return true;
+    });
+    
+    let newJobAdd:JobModel = new JobModel();
+    newJobAdd.id = row_obj.id;
+    newJobAdd.computerID = Number(row_obj.name);
+    newJobAdd.templateID = Number(row_obj.template);
+    newJobAdd.active = row_obj.active; 
+    console.log(newJobAdd);
+    this.jobsService.putJob(newJobAdd).subscribe(job => {this.table.renderRows(),this.refreshjobs()});
+    /*this.table.renderRows();    */    
+  }
+  refreshjobs()
+  {
+    this.jobsService.getJobs().subscribe( jobs => {this.dataSource=jobs,this.table.renderRows();} );
+  }
+
+
+  deleteRowData(row_obj){
+    this.dataSource = this.dataSource.filter((value,key)=>{
+      return value.id != row_obj.id;      
+    });
+    let newJobAdd:JobModel = new JobModel();
+    newJobAdd.id = row_obj.id;
+    newJobAdd.computerID = Number(row_obj.name);
+    newJobAdd.templateID = Number(row_obj.template);
+    newJobAdd.active = true; 
+
+    this.jobsService.deleteJob(newJobAdd).subscribe(job => this.table.renderRows());
+  }  
+
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
+    const numRows = this.dataSource.length;
     return numSelected === numRows;
   }
 
-   /** Selects all rows if they are not all selected; otherwise clear selection. */
-   masterToggle() {
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
     this.isAllSelected() ?
         this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
+        this.dataSource.forEach(row => this.selection.select(row));
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: TemplateClient): string {
+  checkboxLabel(row?: JobModel): string {
     if (!row) {
-      return `${this.isAllSelected() ? 'client' : 'deselect'} all`;
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'client'} row ${row.position + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'}`;
   }
+  /*checkboxLabel(row?: UsersData): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
+  */
+   
 
-  constructor() { }
+ 
 
   ngOnInit(): void {
+    this.jobsService.getJobs().subscribe( jobs => {this.dataSource=jobs,this.table.renderRows();} )
+    
+
   }
 
 }

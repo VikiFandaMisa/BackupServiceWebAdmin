@@ -38,7 +38,7 @@ export class ComputersService {
 
   putComputer(computer: ComputerModel): Observable<ComputerModel> { 
     return this.http.put<ComputerModel>(
-      environment.server + "computers",
+      environment.server + "computers/" + computer.id,
       computer,
       {
         headers: new HttpHeaders({

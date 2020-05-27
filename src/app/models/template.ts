@@ -28,14 +28,13 @@ export namespace BackupTypeUtils {
 export class TemplateModel {
     id: number;
     name: string;
-    period: string;    
+    period: string;
+    type: number;
+    targetFileType: number;
     start: Date;
     end: Date;
     paused: boolean;
     retention: number;
-    email: string;
-    sendReports: boolean;
-    reportPeriod: string;
     sources: PathModel[];
     targets: PathModel[];
 }

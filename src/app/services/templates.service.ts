@@ -38,7 +38,7 @@ export class TemplatesService {
 
   putTemplate(template: TemplateModel): Observable<TemplateModel> { 
     return this.http.put<TemplateModel>(
-      environment.server + "templates",
+      environment.server + "templates/" + template.id,
       template,
       {
         headers: new HttpHeaders({

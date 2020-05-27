@@ -1,0 +1,15 @@
+<h1 mat-dialog-title><strong>{{action}} Job</strong></h1>
+<div mat-dialog-content>    
+  <label *ngIf="action != 'Delete'">Active:<input   (change)="onclick()" type="checkbox" [checked]="local_data.active">  </label> 
+  <mat-form-field *ngIf="action != 'Delete'">
+    <input placeholder="{{action}} Template" matInput [(ngModel)]="local_data.template">       
+  </mat-form-field>  
+  <mat-form-field *ngIf="action != 'Delete'">
+      <input placeholder="{{action}} Client" matInput="local_data.name"  [(ngModel)]="local_data.name">     
+  </mat-form-field>
+  <label *ngIf="action == 'Delete'">Sure to delete this job {{local_data.template}}? </label>         
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="doAction()">{{action}}</button>
+  <button mat-button (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
+</div>
