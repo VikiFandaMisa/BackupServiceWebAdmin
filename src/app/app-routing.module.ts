@@ -7,6 +7,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ComputersComponent } from './components/computers/computers.component';
 import { TemplateComponent } from './components/template/template.component';
 import { JobsComponent } from './components/jobs/jobs.component';
+import { LogsComponent } from './components/logs/logs.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'accounts', component: AccountsComponent },
   { path: 'computers', component: ComputersComponent },
   { path: 'template', component: TemplateComponent },
-  { path: 'jobs', component: JobsComponent}
+  { path: 'jobs', component: JobsComponent},
+  { path: 'logs', component: LogsComponent}
 ];
 
 @NgModule({

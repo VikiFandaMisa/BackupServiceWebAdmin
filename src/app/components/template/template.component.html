@@ -1,6 +1,12 @@
 <form [formGroup]="TemplateForm" >
-    <h1>Template</h1>   
-   
+    <h1>Template</h1>     
+    <!--
+    <br><br>
+    <div id="container">
+    <button type="button home-button" id="button1" >Home</button>
+    <button type="button contact-button" id="button2">Contact Us</button>
+    </div>
+  -->
 
     <label>
       Name:
@@ -10,14 +16,24 @@
 
     <div class="">
       <label for="type">type</label>
-      <select id="types" class="form-control"
-          formControlName="type" required >
-        <option *ngFor="let t of types" [value]="t">{{t}}</option>
+      <select  (change)="SetType($event.target.value)" >          
+        <option *ngFor="let t of types" >{{t}}</option>
         
       </select>  
     </div>
 
     <div class="">
+      <label for="format">Format</label>
+      <select  (change)="SetFormat($event.target.value)" >          
+        <option *ngFor="let t of Formats" >{{t}}</option>
+        
+      </select>  
+    </div>
+
+
+
+    <!-- vybrat z selectu
+      <div class="">
       <label for="Format">Format</label>
       <select id="Formats" class="form-control"
           formControlName="Format" required >
@@ -25,6 +41,7 @@
         
       </select>  
     </div>  
+    -->
 
     
 
@@ -60,8 +77,9 @@
       </label>
     </div>
     
-    <button (click)="SwitchCron(0)">Hours</button>
+    
     <label>
+    <button (click)="SwitchCron(0)">Hours</button>
       Amount
       <input [attr.disabled]="switched == 1 || null" (change)="setDecider($event.target.value)" type="text" formControlName="Amount">
       <select [disabled]="switched == 1" (change)="changeTimetype($event.target.value)" >            
@@ -105,7 +123,7 @@
           <input type="text" [formControlName]="x">
         </label>
       </div>
-    </div>
+    </div>    
   
     <div formArrayName="Paths">
       <h3>Target Path</h3>
@@ -117,7 +135,10 @@
         <label>
            Path:
           <input type="text" [formControlName]="i">
+          <button mat-button (click)="openDialog('Apply',{})" mat-flat-button color="blue" >Network</button>
+          
         </label>
+        
       </div>
     </div>
   
