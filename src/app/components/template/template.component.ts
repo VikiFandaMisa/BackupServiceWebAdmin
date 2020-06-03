@@ -8,7 +8,9 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { TemplateModel } from 'src/app/models/template';
 import { PathModel } from 'src/app/models/path';
 import { TemplatesService } from 'src/app/services/templates.service';
-    
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatTable} from '@angular/material/table';  
+import {DialogComponent } from './dialog/dialog.component';
 
 @Component({
   selector: 'app-template',
@@ -22,8 +24,8 @@ export class TemplateComponent implements OnInit {
   showfield = false;
 
   //value = 5
-  types = [1, 2, 3];
-  Formats =[1,2];
+  types = ['FullBackup', 'DiffBackup','IncrBackup'];
+  Formats =['Zip','PLain'];
   Timetypes=['minutes','hours','days','months'];
   timetype=0;
 
@@ -52,7 +54,8 @@ export class TemplateComponent implements OnInit {
     Cron: ['', Validators.required],
     type: [''],
     Format: [''],
-    Amount:[''],   
+    Amount:[''], 
+    Network:[''],  
     Repeat: this.fb.group({
       Retence: [''],
       Start: [''],
@@ -62,9 +65,32 @@ export class TemplateComponent implements OnInit {
       this.fb.control('')
     ]),
     Paths: this.fb.array([
+      this.fb.control(''),      
+    ]),
+    /*
+    NetworksJason: this.fb.array([
       this.fb.control('')
     ])
+    */
+    
   });  
+
+  openDialog(action,obj) {
+    obj.action = action;
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '400px',
+      data:obj
+    });
+    
+    dialogRef.afterClosed().subscribe(result => {
+      if(result.event == 'Apply'){
+        this.TemplateForm.patchValue({      
+          Network: result.value as JSON,           
+        });
+      }
+    });
+    
+  }
 
   changeTimetype(value)
   {
@@ -84,6 +110,42 @@ export class TemplateComponent implements OnInit {
       this.timetype=3; 
       this.Setmonth();
     }      
+  }
+
+  SetType(value)
+  {
+    let Tvalue = 1;
+    if  (value == 'FullBackup')
+    {
+      Tvalue = 1
+    }
+    if  (value == 'IncrBackup')
+    {      
+      Tvalue = 3
+    }
+    if  (value == 'DiffBackup')
+    {      
+      Tvalue = 2
+    }
+    this.TemplateForm.patchValue({      
+      Format: Tvalue,           
+    });
+  }
+
+  SetFormat(value)
+  {
+    let Tvalue = 1;
+    if  (value == 'Plain')
+    {
+      Tvalue = 1
+    }   
+    if  (value == 'Zip')
+    {      
+      Tvalue = 2
+    }
+    this.TemplateForm.patchValue({      
+      type: Tvalue,           
+    });
   }
 
 
@@ -291,7 +353,7 @@ export class TemplateComponent implements OnInit {
   }
 
   
-  constructor(private fb: FormBuilder,private TemplateService:TemplatesService ) { }
+  constructor(private fb: FormBuilder,private TemplateService:TemplatesService,public dialog: MatDialog ) { }
 
   GetCronHours(value: string) {
     var hourscron:string ='0 */'+value+' * * *'
@@ -312,8 +374,12 @@ export class TemplateComponent implements OnInit {
     return this.TemplateForm.get('Paths') as FormArray;
   }  
 
+  get NetworksJason() {
+    return this.TemplateForm.get('Paths') as FormArray;
+  }  
+
   addPath() {    
-    this.Paths.push(this.fb.control(''));     
+    this.Paths.push(this.fb.control(''));    
   }  
 
   addPathfrom() {      
@@ -351,7 +417,7 @@ export class TemplateComponent implements OnInit {
          let pathfrom:PathModel = new PathModel();
          pathfrom.id=0;
          pathfrom.directory= control.value;        
-         pathfrom.network='';
+         pathfrom.network= this.TemplateForm.get('Network').value;
          arrayofsources.push(pathfrom);         
     }
     for (let control of this.Paths.controls) {     

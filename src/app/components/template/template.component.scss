@@ -7,7 +7,7 @@
   
   label {
     display: block;
-    width: 25em;
+    width: 29em;
     margin: .5em 0;
     color: #607D8B;
     font-weight: bold;
@@ -29,16 +29,53 @@
   }
   
   button:hover {
-    background-color: #cfd8dc;
+    background-color:palevioletred;
   }
-  
+
+  button:active{
+    background-color: peru;
+  } 
   button:disabled {
     background-color: #eee;
     color: #ccc;
     cursor: auto;
   }
+  button:checked{
+    background-color: peru;
+  }
   h1 {
     color: rgb(206, 25, 25);
     font-family: Arial, Helvetica, sans-serif;
     font-size: 250%;
+    width: max-content;
+  }
+
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+.mat-label{
+  color: #e43131;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 150%;
+  padding: 5px;
+  padding-right: 15px;
+}
+table {
+    width: 80%;
+  }
+  
+  body {
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0;
+  }
+
+.basic-container {
+  padding: 30px;
+}
+.version-info {
+  font-size: 8pt;
+  float: right;
+  margin: 8px;
 }

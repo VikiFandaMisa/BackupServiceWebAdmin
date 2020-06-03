@@ -66,6 +66,10 @@ import { JobsComponent } from './components/jobs/jobs.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DialogBoxComponent } from './components/jobs/dialog-box/dialog-box.component';
 
+import { LogsComponent } from './components/logs/logs.component';
+import { LogsTableComponent } from './components/logs/logs-table/logs-table.component';
+import { DialogComponent } from './components/template/dialog/dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -81,10 +85,15 @@ import { DialogBoxComponent } from './components/jobs/dialog-box/dialog-box.comp
     ComputerFormComponent,
     TemplateComponent,
     JobsComponent,
-    DialogBoxComponent
+    DialogBoxComponent,
+
+    LogsComponent,
+    LogsTableComponent,
+    DialogComponent
   ],
   imports: [  
     BrowserModule,
+
     BrowserAnimationsModule,
     FormsModule,
     MatTableModule,
