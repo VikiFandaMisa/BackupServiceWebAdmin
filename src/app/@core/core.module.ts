@@ -8,7 +8,6 @@ import { CommonModule } from "@angular/common";
 import { MAT_RIPPLE_GLOBAL_OPTIONS } from "@angular/material/core";
 import {
     NbAuthModule,
-    NbDummyAuthStrategy,
     NbPasswordAuthStrategy,
     NbAuthJWTToken,
 } from "@nebular/auth";
@@ -18,25 +17,26 @@ import { of as observableOf } from "rxjs";
 import { throwIfAlreadyLoaded } from "./module-import-guard";
 import { LayoutService, PlayerService, StateService } from "./utils";
 
-import { AccountData } from "./data/accounts";
-import { TokenData } from "./data/tokens";
+import { AccountData } from "./data/account";
+import { ComputerData } from "./data/computer";
+import { JobData } from "./data/job";
+import { LogItemData } from "./data/logItem";
+import { TemplateData } from "./data/template";
 
-import { AccountService } from "./api/accounts.service";
-import { TokenService } from "./api/tokens.service";
+import { AccountService } from "./api/account.service";
+import { ComputerService } from "./api/computer.service";
+import { JobService } from "./api/job.service";
+import { LogService } from "./api/log.service";
+import { TemplateService } from "./api/template.service";
 import { RippleService } from "./utils/ripple.service";
 import { ApiDataModule } from "./api/api-data.module";
 
-const socialLinks = [
-    {
-        url: "https://github.com/VikiFandaMisa/BackupServiceWebAdmin",
-        target: "_blank",
-        icon: "github",
-    },
-];
-
 const DATA_SERVICES = [
     { provide: AccountData, useClass: AccountService },
-    { provide: TokenData, useClass: TokenService },
+    { provide: ComputerData, useClass: ComputerService },
+    { provide: JobData, useClass: JobService },
+    { provide: LogItemData, useClass: LogService },
+    { provide: TemplateData, useClass: TemplateService },
     { provide: MAT_RIPPLE_GLOBAL_OPTIONS, useExisting: RippleService },
 ];
 
@@ -52,20 +52,44 @@ export const NB_CORE_PROVIDERS = [
     ...DATA_SERVICES,
     ...NbAuthModule.forRoot({
         strategies: [
-            NbDummyAuthStrategy.setup({
-                name: "auth",
-                delay: 3000,
+            NbPasswordAuthStrategy.setup({
+                name: "email",
+                token: {
+                    class: NbAuthJWTToken,
+                    key: "token",
+                },
+                baseEndpoint: "",
+                login: {
+                    endpoint: "/api/token/user",
+                    method: "post",
+                    redirect: {
+                        success: "/pages/log",
+                        failure: "",
+                    },
+                },
+                logout: {
+                    endpoint: "/api/token/",
+                    method: "delete",
+                    redirect: {
+                        success: "/auth/login",
+                        failure: "/auth/login",
+                    },
+                },
             }),
         ],
         forms: {
             login: {
                 redirectDelay: 0,
-                strategy: "auth",
+                strategy: "email",
                 rememberMe: false,
                 showMessages: {
                     success: false,
                     error: true,
                 },
+            },
+            logout: {
+                redirectDelay: 0,
+                strategy: "email",
             },
         },
     }).providers,
@@ -75,15 +99,8 @@ export const NB_CORE_PROVIDERS = [
             guest: {
                 view: "*",
             },
-            user: {
-                parent: "guest",
-                create: "*",
-                edit: "*",
-                remove: "*",
-            },
         },
     }).providers,
-
     {
         provide: NbRoleProvider,
         useClass: NbSimpleRoleProvider,

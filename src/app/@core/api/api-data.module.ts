@@ -1,12 +1,18 @@
 import { NgModule, ModuleWithProviders } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
-import { AccountService } from "./accounts.service";
-import { TokenService } from "./tokens.service";
+import { AccountService } from "./account.service";
+import { ComputerService } from "./computer.service";
+import { JobService } from "./job.service";
+import { LogService } from "./log.service";
+import { TemplateService } from "./template.service";
 
 const SERVICES = [
     AccountService,
-    TokenService
+    ComputerService,
+    JobService,
+    LogService,
+    TemplateService,
 ];
 
 @NgModule({

@@ -6,7 +6,7 @@ import {
     NbThemeService,
 } from "@nebular/theme";
 
-import { AccountData } from "../../../@core/data/accounts";
+import { AccountData } from "../../../@core/data/account";
 import { LayoutService } from "../../../@core/utils";
 import { map, takeUntil } from "rxjs/operators";
 import { Subject, Observable } from "rxjs";
@@ -52,7 +52,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     currentTheme = "default";
 
-    userMenu = [{ title: "Log out" }];
+    userMenu = [{ title: "Log out", link: "/auth/logout" }];
 
     public constructor(
         private sidebarService: NbSidebarService,
