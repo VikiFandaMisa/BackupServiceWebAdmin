@@ -12,7 +12,7 @@ import {
     NbPopoverModule,
     NbSelectModule,
     NbTooltipModule,
-    NbWindowModule,
+    NbRadioModule,
 } from "@nebular/theme";
 
 import { ThemeModule } from "../@theme/theme.module";
@@ -45,6 +45,7 @@ import { JobFormComponent } from "./jobs/job-form/job-form.component";
         NbButtonModule,
         NbSelectModule,
         NbTooltipModule,
+        NbRadioModule,
     ],
     declarations: [
         PagesComponent,

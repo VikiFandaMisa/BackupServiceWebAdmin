@@ -1,15 +1,52 @@
 <nb-card>
-    <nb-card-header>TEST</nb-card-header>
+    <nb-card-header>Job</nb-card-header>
     <nb-card-body>
-        <input #name nbInput placeholder="TEST" />
+        <form>
+            <div class="form-group row">
+                <label for="inputEmail1" class="label col-sm-3 col-form-label"
+                    >Computer</label
+                >
+                <div class="col-sm-9">
+                    <nb-select required matRipple [(selected)]="job.computerID">
+                        <nb-option
+                            *ngFor="let computer of computers"
+                            matRipple
+                            [value]="computer.id"
+                            >{{ computer.hostname }}</nb-option
+                        >
+                    </nb-select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label
+                    for="inputPassword2"
+                    class="label col-sm-3 col-form-label"
+                    >Template</label
+                >
+                <div class="col-sm-9">
+                    <nb-select required matRipple [(selected)]="job.templateID">
+                        <nb-option
+                            *ngFor="let template of templates"
+                            matRipple
+                            [value]="template.id"
+                            >{{ template.name }}</nb-option
+                        >
+                    </nb-select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 label">Radios</label>
+                <div class="col-sm-9">
+                    <nb-radio-group required [(value)]="job.active">
+                        <nb-radio [value]="true">Enabled</nb-radio>
+                        <nb-radio [value]="false">Disabled</nb-radio>
+                    </nb-radio-group>
+                </div>
+            </div>
+        </form>
     </nb-card-body>
     <nb-card-footer>
-        <button
-            nbButton
-            matRipple
-            status="success"
-            (click)="submit(name.value)"
-        >
+        <button nbButton matRipple status="success" (click)="submit()">
             Submit
         </button>
     </nb-card-footer>

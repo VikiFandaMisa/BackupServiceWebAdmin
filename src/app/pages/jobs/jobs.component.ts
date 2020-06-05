@@ -7,7 +7,13 @@ import {
     NbDialogService,
 } from "@nebular/theme";
 import { Job, JobData } from "../../@core/data/job";
-import { JobFormComponent } from "./job-form/job-form.component";
+import {
+    JobFormComponent,
+    ComputerOption,
+    TemplateOption,
+} from "./job-form/job-form.component";
+import { ComputerData } from "../../@core/data/computer";
+import { TemplateData } from "../../@core/data/templates";
 
 interface TreeNode {
     data: Job;
@@ -22,6 +28,8 @@ export class JobsComponent {
     defaultColumns = ["computerID", "templateID", "active"];
     allColumns = this.defaultColumns;
     data: TreeNode[];
+    computerOptions: ComputerOption[];
+    templateOptions: TemplateOption[];
     dataSource: NbTreeGridDataSource<Job>;
     sortColumn: string;
     sortDirection: NbSortDirection = NbSortDirection.NONE;
@@ -29,16 +37,44 @@ export class JobsComponent {
     constructor(
         private dataSourceBuilder: NbTreeGridDataSourceBuilder<Job>,
         private jobData: JobData,
+        private computerData: ComputerData,
+        private templateData: TemplateData,
         private dialogService: NbDialogService
     ) {
         this.loadJobs();
+        this.loadOptions();
     }
 
     loadJobs() {
         this.jobData.getJobs().subscribe((jobs) => {
             this.data = [];
             jobs.forEach((job) => this.data.push({ data: job }));
-            this.dataSource = this.dataSourceBuilder.create(this.data);
+            this.createDataSource();
+        });
+    }
+
+    createDataSource() {
+        this.dataSource = this.dataSourceBuilder.create(this.data);
+    }
+
+    loadOptions() {
+        this.computerData.getComputers().subscribe((computers) => {
+            this.computerOptions = [];
+            computers.forEach((computer) =>
+                this.computerOptions.push({
+                    id: computer.id,
+                    hostname: computer.hostname,
+                })
+            );
+        });
+        this.templateData.getTemplates().subscribe((templates) => {
+            this.templateOptions = [];
+            templates.forEach((template) =>
+                this.templateOptions.push({
+                    id: template.id,
+                    name: template.name,
+                })
+            );
         });
     }
 
@@ -65,9 +101,23 @@ export class JobsComponent {
         this.dialogService
             .open(JobFormComponent, {
                 context: {
-                    job: job,
+                    job: {
+                        id: job.id,
+                        computerID: job.computerID,
+                        templateID: job.templateID,
+                        active: job.active,
+                    },
+                    computers: this.computerOptions,
+                    templates: this.templateOptions,
                 },
             })
-            .onClose.subscribe((name) => console.log(name));
+            .onClose.subscribe((job) => {
+                if (job != null) {
+                    this.data.forEach((data) => {
+                        if (data.data.id == job.id) data.data = job;
+                    });
+                    this.createDataSource();
+                }
+            });
     }
 }
