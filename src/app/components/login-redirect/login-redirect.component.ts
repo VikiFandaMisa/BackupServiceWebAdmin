@@ -3,8 +3,8 @@ import { NbAuthService } from "@nebular/auth";
 import { Router, NavigationEnd } from "@angular/router";
 
 @Component({
-  selector: 'login-redirect',
-  template: '',
+    selector: "login-redirect",
+    template: "",
 })
 export class LoginRedirectComponent implements OnInit {
     constructor(private authService: NbAuthService, public router: Router) {}
@@ -15,11 +15,10 @@ export class LoginRedirectComponent implements OnInit {
                 this.authService
                     .isAuthenticated()
                     .subscribe((isAuthenticated) => {
-                        if (!isAuthenticated && val.url.startsWith("/pages"))
+                        if (!isAuthenticated)
                             this.router.navigate(["/auth/login"]);
                     });
             }
         });
     }
 }
-

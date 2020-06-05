@@ -6,6 +6,7 @@ import { MENU_ITEMS } from "./pages-menu";
     selector: "ngx-pages",
     styleUrls: ["pages.component.scss"],
     template: `
+        <login-redirect></login-redirect>
         <ngx-one-column-layout>
             <nb-menu [items]="menu"></nb-menu>
             <router-outlet></router-outlet>

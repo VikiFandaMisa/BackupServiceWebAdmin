@@ -1,0 +1,16 @@
+<nb-card>
+    <nb-card-header>TEST</nb-card-header>
+    <nb-card-body>
+        <input #name nbInput placeholder="TEST" />
+    </nb-card-body>
+    <nb-card-footer>
+        <button
+            nbButton
+            matRipple
+            status="success"
+            (click)="submit(name.value)"
+        >
+            Submit
+        </button>
+    </nb-card-footer>
+</nb-card>

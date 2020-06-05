@@ -21,7 +21,7 @@ import { AccountData } from "./data/account";
 import { ComputerData } from "./data/computer";
 import { JobData } from "./data/job";
 import { LogItemData } from "./data/logItem";
-import { TemplateData } from "./data/template";
+import { TemplateData } from "./data/templates";
 
 import { AccountService } from "./api/account.service";
 import { ComputerService } from "./api/computer.service";

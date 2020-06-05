@@ -18,10 +18,9 @@ import {
     NbAuthJWTInterceptor,
     NB_AUTH_TOKEN_INTERCEPTOR_FILTER,
 } from "@nebular/auth";
-import { LoginRedirectComponent } from './components/login-redirect/login-redirect.component';
 
 @NgModule({
-    declarations: [AppComponent, LoginRedirectComponent],
+    declarations: [AppComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,

@@ -2,7 +2,7 @@ import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
-import { TemplateData, Template } from "../data/template";
+import { TemplateData, Template } from "../data/templates";
 
 @Injectable()
 export class TemplateService extends TemplateData {
