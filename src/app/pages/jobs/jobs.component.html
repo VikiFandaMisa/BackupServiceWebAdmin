@@ -1,12 +1,18 @@
 <nb-card>
     <nb-card-body>
         <label class="search-label" for="search">Search:</label>
-        <input
-            nbInput
-            [nbFilterInput]="dataSource"
-            id="search"
-            class="search-input"
-        />
+        <div>
+            <input
+                nbInput
+                [nbFilterInput]="dataSource"
+                id="search"
+                class="search-input"
+            />
+
+            <button id="add" nbButton matRipple (click)="addClick()">
+                Add
+            </button>
+        </div>
 
         <table
             [nbTreeGrid]="dataSource"
@@ -17,7 +23,8 @@
             <tr
                 nbTreeGridRow
                 *nbTreeGridRowDef="let row; columns: allColumns"
-                (click)="click(row)"
+                matRipple
+                (click)="editClick(row)"
             ></tr>
 
             <ng-container
@@ -33,7 +40,7 @@
                     {{ column }}
                 </th>
                 <td nbTreeGridCell *nbTreeGridCellDef="let row">
-                    {{ row.data[column] || "-" }}
+                    {{ row.data[column] == null ? "-" : row.data[column] }}
                 </td>
             </ng-container>
         </table>

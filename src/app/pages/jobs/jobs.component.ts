@@ -11,6 +11,7 @@ import {
     JobFormComponent,
     ComputerOption,
     TemplateOption,
+    ReturnAction,
 } from "./job-form/job-form.component";
 import { ComputerData } from "../../@core/data/computer";
 import { TemplateData } from "../../@core/data/templates";
@@ -96,7 +97,7 @@ export class JobsComponent {
         return minWithForMultipleColumns + nextColumnStep * index;
     }
 
-    click(row: TreeNode) {
+    editClick(row: TreeNode) {
         const job: Job = row.data;
         this.dialogService
             .open(JobFormComponent, {
@@ -111,13 +112,63 @@ export class JobsComponent {
                     templates: this.templateOptions,
                 },
             })
-            .onClose.subscribe((job) => {
-                if (job != null) {
-                    this.data.forEach((data) => {
-                        if (data.data.id == job.id) data.data = job;
-                    });
-                    this.createDataSource();
+            .onClose.subscribe((ret) => {
+                if (ret != null) {
+                    let job = ret[1];
+                    if (ret[0] == ReturnAction.delete) this.delete(job);
+                    else this.edit(job);
                 }
             });
+    }
+
+    addClick() {
+        this.dialogService
+            .open(JobFormComponent, {
+                context: {
+                    job: {
+                        id: null,
+                        computerID: null,
+                        templateID: null,
+                        active: true,
+                    },
+                    computers: this.computerOptions,
+                    templates: this.templateOptions,
+                },
+            })
+            .onClose.subscribe((ret) => {
+                if (ret != null) this.add(ret[1]);
+            });
+    }
+
+    add(job: Job) {
+        job.id = 0;
+        this.jobData.postJob(job).subscribe((_) => {
+            this.data.push({ data: job });
+            this.createDataSource();
+        });
+    }
+
+    edit(job: Job) {
+        for (let i = 0; i < this.data.length; i++) {
+            if (this.data[i].data.id == job.id) {
+                this.jobData.putJob(job).subscribe((_) => {
+                    this.data[i].data = job;
+                    this.createDataSource();
+                });
+                break;
+            }
+        }
+    }
+
+    delete(job: Job) {
+        for (let i = 0; i < this.data.length; i++) {
+            if (this.data[i].data.id == job.id) {
+                this.jobData.deleteJob(job).subscribe((_) => {
+                    this.data.splice(i, 1);
+                    this.createDataSource();
+                });
+                break;
+            }
+        }
     }
 }

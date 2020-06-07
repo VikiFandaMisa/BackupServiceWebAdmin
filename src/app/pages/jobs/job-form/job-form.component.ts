@@ -12,6 +12,11 @@ export interface TemplateOption {
     name: string;
 }
 
+export enum ReturnAction {
+    submit,
+    delete,
+}
+
 @Component({
     selector: "job-form",
     templateUrl: "job-form.component.html",
@@ -29,6 +34,10 @@ export class JobFormComponent {
     }
 
     submit() {
-        this.ref.close(this.job);
+        this.ref.close([ReturnAction.submit, this.job]);
+    }
+
+    delete() {
+        this.ref.close([ReturnAction.delete, this.job]);
     }
 }

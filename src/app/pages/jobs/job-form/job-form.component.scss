@@ -10,16 +10,20 @@
     .cancel {
         margin-right: 1rem;
     }
-}
 
-nb-select {
-    width: 20rem;
-}
+    nb-select {
+        width: 20rem;
+    }
 
-.row {
-    width: 100%;
-}
+    .row {
+        width: 100%;
+    }
 
-nb-card-body {
-    margin: auto;
+    nb-card-body {
+        margin: auto;
+    }
+
+    #add {
+        float: right;
+    }
 }
