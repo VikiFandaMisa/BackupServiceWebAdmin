@@ -27,10 +27,7 @@ export class AccountService extends AccountData {
     }
 
     putAccount(account: Account): Observable<Account> {
-        return this.httpClient.put<Account>(
-            "/api/accounts/" + account.id,
-            account
-        );
+        return this.httpClient.put<Account>("/api/accounts/", account);
     }
 
     deleteAccount(account: Account): Observable<Account> {

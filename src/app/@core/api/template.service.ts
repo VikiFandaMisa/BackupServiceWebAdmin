@@ -23,10 +23,7 @@ export class TemplateService extends TemplateData {
     }
 
     putTemplate(template: Template): Observable<Template> {
-        return this.httpClient.put<Template>(
-            "/api/templates/" + template.id,
-            template
-        );
+        return this.httpClient.put<Template>("/api/templates/", template);
     }
 
     deleteTemplate(template: Template): Observable<Template> {

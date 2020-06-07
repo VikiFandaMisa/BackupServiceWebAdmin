@@ -18,15 +18,8 @@ export class ComputerService extends ComputerData {
         return this.httpClient.get<Computer>("/api/computers/" + id);
     }
 
-    postComputer(computer: Computer): Observable<Computer> {
-        return this.httpClient.post<Computer>("/api/computers/", computer);
-    }
-
     putComputer(computer: Computer): Observable<Computer> {
-        return this.httpClient.put<Computer>(
-            "/api/computers/" + computer.id,
-            computer
-        );
+        return this.httpClient.put<Computer>("/api/computers/", computer);
     }
 
     deleteComputer(computer: Computer): Observable<Computer> {

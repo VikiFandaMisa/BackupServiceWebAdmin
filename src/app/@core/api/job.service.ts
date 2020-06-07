@@ -23,7 +23,7 @@ export class JobService extends JobData {
     }
 
     putJob(job: Job): Observable<Job> {
-        return this.httpClient.put<Job>("/api/jobs/" + job.id, job);
+        return this.httpClient.put<Job>("/api/jobs/", job);
     }
 
     deleteJob(job: Job): Observable<Job> {

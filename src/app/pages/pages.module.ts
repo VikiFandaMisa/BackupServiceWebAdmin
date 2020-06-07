@@ -26,6 +26,7 @@ import { AccountsComponent } from "./accounts/accounts.component";
 import { ComputersComponent } from "./computers/computers.component";
 import { LoginRedirectComponent } from "../components/login-redirect/login-redirect.component";
 import { JobFormComponent } from "./jobs/job-form/job-form.component";
+import { ComputerFormComponent } from "./computers/computer-form/computer-form.component";
 
 @NgModule({
     imports: [
@@ -56,6 +57,7 @@ import { JobFormComponent } from "./jobs/job-form/job-form.component";
         AccountsComponent,
         ComputersComponent,
         LoginRedirectComponent,
+        ComputerFormComponent,
     ],
 })
 export class PagesModule {}

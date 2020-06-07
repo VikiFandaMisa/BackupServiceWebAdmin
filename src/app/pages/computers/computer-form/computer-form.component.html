@@ -1,0 +1,26 @@
+<nb-card>
+    <nb-card-header>{{ computer.hostname }}</nb-card-header>
+    <nb-card-body>
+        <form>
+            <div class="form-group row">
+                <label class="col-sm-3 label"></label>
+                <div class="col-sm-9">
+                    <nb-radio-group required [(value)]="computer.status">
+                        <nb-radio *ngFor="let i of computerStatuses" [value]="i">{{ statusToString(i) }}</nb-radio>
+                    </nb-radio-group>
+                </div>
+            </div>
+        </form>
+    </nb-card-body>
+    <nb-card-footer>
+        <button
+            id="submit"
+            nbButton
+            matRipple
+            status="success"
+            (click)="submit()"
+        >
+            Submit
+        </button>
+    </nb-card-footer>
+</nb-card>

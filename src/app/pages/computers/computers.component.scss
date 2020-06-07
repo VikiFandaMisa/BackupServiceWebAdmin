@@ -52,4 +52,14 @@
             width: 23%;
         }
     }
+
+    tr[nbTreeGridRow]:hover {
+        background-color: nb-theme(background-basic-color-2);
+        opacity: 0;
+        transition: 0.3s;
+    }
+
+    tr[nbTreeGridRow]:hover {
+        opacity: 1;
+    }
 }

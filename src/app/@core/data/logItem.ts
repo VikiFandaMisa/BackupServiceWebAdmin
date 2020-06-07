@@ -26,7 +26,5 @@ export interface LogItem {
 export abstract class LogItemData {
     abstract getLogItems(): Observable<LogItem[]>;
     abstract getLogItem(id: number): Observable<LogItem>;
-    abstract postLogItem(logItem: LogItem): Observable<LogItem>;
-    abstract putLogItem(logItem: LogItem): Observable<LogItem>;
     abstract deleteLogItem(logItem: LogItem): Observable<LogItem>;
 }

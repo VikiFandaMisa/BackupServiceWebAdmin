@@ -27,7 +27,6 @@ export interface Computer {
 export abstract class ComputerData {
     abstract getComputers(): Observable<Computer[]>;
     abstract getComputer(id: number): Observable<Computer>;
-    abstract postComputer(computer: Computer): Observable<Computer>;
     abstract putComputer(computer: Computer): Observable<Computer>;
     abstract deleteComputer(computer: Computer): Observable<Computer>;
 }
