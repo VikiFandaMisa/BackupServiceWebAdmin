@@ -1,0 +1,69 @@
+<nb-card>
+    <nb-card-header>Job</nb-card-header>
+    <nb-card-body>
+        <form>
+            <div class="form-group row">
+                <label for="inputComputer" class="label col-sm-3 col-form-label"
+                    >Computer</label
+                >
+                <div class="col-sm-9">
+                    <nb-select required matRipple [(selected)]="job.computerID">
+                        <nb-option
+                            *ngFor="let computer of computers"
+                            matRipple
+                            [value]="computer.id"
+                            >{{ computer.hostname }}</nb-option
+                        >
+                    </nb-select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label
+                    for="inputTemplate"
+                    class="label col-sm-3 col-form-label"
+                    >Template</label
+                >
+                <div class="col-sm-9">
+                    <nb-select required matRipple [(selected)]="job.templateID">
+                        <nb-option
+                            *ngFor="let template of templates"
+                            matRipple
+                            [value]="template.id"
+                            >{{ template.name }}</nb-option
+                        >
+                    </nb-select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 label"></label>
+                <div class="col-sm-9">
+                    <nb-radio-group required [(value)]="job.active">
+                        <nb-radio [value]="true">Enabled</nb-radio>
+                        <nb-radio [value]="false">Disabled</nb-radio>
+                    </nb-radio-group>
+                </div>
+            </div>
+        </form>
+    </nb-card-body>
+    <nb-card-footer>
+        <button
+            [hidden]="job.id == null"
+            nbButton
+            matRipple
+            status="danger"
+            (click)="delete()"
+        >
+            Delete
+        </button>
+
+        <button
+            id="submit"
+            nbButton
+            matRipple
+            status="success"
+            (click)="submit()"
+        >
+            Submit
+        </button>
+    </nb-card-footer>
+</nb-card>

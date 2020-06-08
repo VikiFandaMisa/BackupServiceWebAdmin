@@ -1,23 +1,11 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms'
-import { AuthenticationService } from './services/authentication.service';
-import { AccountsService } from './services/accounts.service';
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: "ngx-app",
+    template: "<router-outlet></router-outlet>",
 })
-export class AppComponent {
-  title = 'BackupServiceWebAdmin';
+export class AppComponent implements OnInit {
+    constructor() {}
 
-  constructor (private authenticationService: AuthenticationService, private accountsService: AccountsService, public router: Router) { }
-
-  ngOnInit(): void {
-    this.authenticationService.loadToken();
-
-    if (this.authenticationService.token == null && this.router.url != '/login')
-      this.router.navigate(['login']);
-  }
+    ngOnInit(): void {}
 }
