@@ -60,4 +60,8 @@ export class TemplatesComponent {
     click(row) {
         console.log(row.data);
     }
+
+    editClick() {}
+
+    addClick() {}
 }

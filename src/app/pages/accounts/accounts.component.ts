@@ -60,4 +60,8 @@ export class AccountsComponent {
     click(row) {
         console.log(row.data);
     }
+
+    editClick() {}
+
+    addClick() {}
 }

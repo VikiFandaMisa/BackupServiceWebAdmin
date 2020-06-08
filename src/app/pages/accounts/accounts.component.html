@@ -8,6 +8,10 @@
             class="search-input"
         />
 
+        <button id="add" nbButton matRipple (click)="addClick()">
+            Add
+        </button>
+
         <table
             [nbTreeGrid]="dataSource"
             [nbSort]="dataSource"
@@ -17,7 +21,7 @@
             <tr
                 nbTreeGridRow
                 *nbTreeGridRowDef="let row; columns: allColumns"
-                (click)="click(row)"
+                (click)="editClick(row)"
             ></tr>
 
             <ng-container
@@ -33,7 +37,7 @@
                     {{ column }}
                 </th>
                 <td nbTreeGridCell *nbTreeGridCellDef="let row">
-                    {{ row.data[column] || "-" }}
+                    {{ row.data[column] == null ? "-" : row.data[column] }}
                 </td>
             </ng-container>
         </table>
