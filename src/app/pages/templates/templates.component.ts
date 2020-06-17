@@ -4,8 +4,13 @@ import {
     NbSortRequest,
     NbTreeGridDataSource,
     NbTreeGridDataSourceBuilder,
+    NbDialogService,
 } from "@nebular/theme";
 import { Template, TemplateData } from "../../@core/data/templates";
+import {
+    TemplateFormComponent,
+    ReturnAction,
+} from "./template-form/template-form.component";
 
 interface TreeNode {
     data: Template;
@@ -26,7 +31,8 @@ export class TemplatesComponent {
 
     constructor(
         private dataSourceBuilder: NbTreeGridDataSourceBuilder<Template>,
-        private templateData: TemplateData
+        private templateData: TemplateData,
+        private dialogService: NbDialogService
     ) {
         this.loadTemplates();
     }
@@ -35,8 +41,12 @@ export class TemplatesComponent {
         this.templateData.getTemplates().subscribe((templates) => {
             this.data = [];
             templates.forEach((template) => this.data.push({ data: template }));
-            this.dataSource = this.dataSourceBuilder.create(this.data);
+            this.createDataSource();
         });
+    }
+
+    createDataSource() {
+        this.dataSource = this.dataSourceBuilder.create(this.data);
     }
 
     updateSort(sortRequest: NbSortRequest): void {
@@ -57,11 +67,94 @@ export class TemplatesComponent {
         return minWithForMultipleColumns + nextColumnStep * index;
     }
 
-    click(row) {
-        console.log(row.data);
+    editClick(row: TreeNode) {
+        const template: Template = row.data;
+        this.dialogService
+            .open(TemplateFormComponent, {
+                context: {
+                    template: {
+                        id: template.id,
+                        name: template.name,
+                        period: template.period,
+                        type: template.type,
+                        targetFileType: template.targetFileType,
+                        start: template.start,
+                        end: template.end,
+                        paused: template.paused,
+                        retention: template.retention,
+                        sources: template.sources,
+                        targets: template.targets,
+                    },
+                },
+            })
+            .onClose.subscribe((ret) => {
+                if (ret != null) {
+                    let template = ret[1];
+                    if (ret[0] == ReturnAction.delete) this.delete(template);
+                    else this.edit(template);
+                }
+            });
     }
 
-    editClick() {}
+    addClick() {
+        const today: Date = new Date();
+        today.setTime(Date.now());
 
-    addClick() {}
+        const nextWeek: Date = new Date();
+        nextWeek.setTime(Date.now() + 1000 * 60 * 60 * 24 * 7);
+
+        this.dialogService
+            .open(TemplateFormComponent, {
+                context: {
+                    template: {
+                        id: null,
+                        name: null,
+                        period: null,
+                        type: null,
+                        targetFileType: null,
+                        start: today.toISOString(),
+                        end: nextWeek.toISOString(),
+                        paused: false,
+                        retention: 1,
+                        sources: [],
+                        targets: [],
+                    },
+                },
+            })
+            .onClose.subscribe((ret) => {
+                if (ret != null) this.add(ret[1]);
+            });
+    }
+
+    add(template: Template) {
+        template.id = 0;
+        this.templateData.postTemplate(template).subscribe((_) => {
+            this.data.push({ data: template });
+            this.createDataSource();
+        });
+    }
+
+    edit(template: Template) {
+        for (let i = 0; i < this.data.length; i++) {
+            if (this.data[i].data.id == template.id) {
+                this.templateData.putTemplate(template).subscribe((_) => {
+                    this.data[i].data = template;
+                    this.createDataSource();
+                });
+                break;
+            }
+        }
+    }
+
+    delete(template: Template) {
+        for (let i = 0; i < this.data.length; i++) {
+            if (this.data[i].data.id == template.id) {
+                this.templateData.deleteTemplate(template).subscribe((_) => {
+                    this.data.splice(i, 1);
+                    this.createDataSource();
+                });
+                break;
+            }
+        }
+    }
 }

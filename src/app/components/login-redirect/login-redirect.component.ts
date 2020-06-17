@@ -10,15 +10,8 @@ export class LoginRedirectComponent implements OnInit {
     constructor(private authService: NbAuthService, public router: Router) {}
 
     ngOnInit(): void {
-        this.router.events.subscribe((val) => {
-            if (val instanceof NavigationEnd) {
-                this.authService
-                    .isAuthenticated()
-                    .subscribe((isAuthenticated) => {
-                        if (!isAuthenticated)
-                            this.router.navigate(["/auth/login"]);
-                    });
-            }
+        this.authService.isAuthenticated().subscribe((isAuthenticated) => {
+            if (!isAuthenticated) this.router.navigate(["/auth/login"]);
         });
     }
 }

@@ -1,0 +1,23 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+div {
+    display: flex;
+    margin: 0 -0.5rem;
+}
+
+input {
+    margin: 0 0.2rem;
+    text-align: center;
+}
+
+span {
+    padding-top: 0.5rem;
+}

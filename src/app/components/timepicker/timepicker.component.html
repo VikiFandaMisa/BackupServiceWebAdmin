@@ -1,0 +1,23 @@
+<div>
+    <input
+        type="number"
+        [(ngModel)]="time.hours"
+        (input)="change()"
+        nbInput
+        min="0"
+        max="23"
+        size="1"
+        maxlength="2"
+    />
+    <span>:</span>
+    <input
+        type="number"
+        [(ngModel)]="time.minutes"
+        (input)="change()"
+        nbInput
+        min="0"
+        max="59"
+        size="1"
+        maxlength="2"
+    />
+</div>

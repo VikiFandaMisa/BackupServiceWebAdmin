@@ -18,7 +18,7 @@ export namespace ComputerStatusUtils {
 export interface Computer {
     id: number;
     hostname: string;
-    lastSeen: Date;
+    lastSeen: string;
     ip: string;
     mac: string;
     status: number;

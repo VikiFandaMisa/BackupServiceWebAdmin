@@ -9,7 +9,8 @@
     "scripts": {
         "ng": "ng",
         "conventional-changelog": "conventional-changelog",
-        "start": "ng s --proxy-config proxy.conf.json -o",
+        "start": "ng s --proxy-config proxy.conf.json",
+        "open": "ng s --proxy-config proxy.conf.json -o",
         "build": "ng build",
         "build:prod": "npm run build -- --prod --aot",
         "test": "ng test",

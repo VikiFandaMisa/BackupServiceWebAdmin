@@ -19,7 +19,7 @@ export interface LogItem {
     id: number;
     jobID: number;
     type: number;
-    date: Date;
+    date: string;
     message: string;
 }
 

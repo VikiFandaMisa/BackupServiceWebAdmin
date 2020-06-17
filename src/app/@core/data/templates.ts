@@ -1,8 +1,8 @@
 import { Path } from "./path";
 import { Observable } from "rxjs";
 
-export const BackupType: number[] = [1, 2, 3];
-export const BackupFileType: number[] = [1, 2];
+export const backupType: number[] = [1, 2, 3];
+export const backupFileType: number[] = [1, 2];
 
 export namespace BackupFileTypeUtils {
     export function toString(status: number): string {
@@ -32,8 +32,8 @@ export class Template {
     period: string;
     type: number;
     targetFileType: number;
-    start: Date;
-    end: Date;
+    start: string;
+    end: string;
     paused: boolean;
     retention: number;
     sources: Path[];

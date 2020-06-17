@@ -27,6 +27,9 @@ import { ComputersComponent } from "./computers/computers.component";
 import { LoginRedirectComponent } from "../components/login-redirect/login-redirect.component";
 import { JobFormComponent } from "./jobs/job-form/job-form.component";
 import { ComputerFormComponent } from "./computers/computer-form/computer-form.component";
+import { TemplateFormComponent } from "./templates/template-form/template-form.component";
+import { TimepickerComponent } from "../components/timepicker/timepicker.component";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
     imports: [
@@ -47,6 +50,7 @@ import { ComputerFormComponent } from "./computers/computer-form/computer-form.c
         NbSelectModule,
         NbTooltipModule,
         NbRadioModule,
+        FormsModule,
     ],
     declarations: [
         PagesComponent,
@@ -58,6 +62,8 @@ import { ComputerFormComponent } from "./computers/computer-form/computer-form.c
         ComputersComponent,
         LoginRedirectComponent,
         ComputerFormComponent,
+        TemplateFormComponent,
+        TimepickerComponent,
     ],
 })
 export class PagesModule {}

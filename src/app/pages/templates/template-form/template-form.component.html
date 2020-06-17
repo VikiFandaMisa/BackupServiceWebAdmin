@@ -1,0 +1,29 @@
+<nb-card>
+    <nb-card-header>{{ template.name }}</nb-card-header>
+    <nb-card-body>
+        <form>
+            <div class="form-group row"></div>
+        </form>
+    </nb-card-body>
+    <nb-card-footer>
+        <button
+            [hidden]="template.id == null"
+            nbButton
+            matRipple
+            status="danger"
+            (click)="delete()"
+        >
+            Delete
+        </button>
+
+        <button
+            id="submit"
+            nbButton
+            matRipple
+            status="success"
+            (click)="submit()"
+        >
+            Submit
+        </button>
+    </nb-card-footer>
+</nb-card>
