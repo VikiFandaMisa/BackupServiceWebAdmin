@@ -7,10 +7,8 @@ import {
     NbDialogService,
 } from "@nebular/theme";
 import { Template, TemplateData } from "../../@core/data/templates";
-import {
-    TemplateFormComponent,
-    ReturnAction,
-} from "./template-form/template-form.component";
+import { TemplateFormComponent } from "./template-form/template-form.component";
+import { ReturnAction } from "./template-form/return-action";
 
 interface TreeNode {
     data: Template;
@@ -70,20 +68,20 @@ export class TemplatesComponent {
     editClick(row: TreeNode) {
         const template: Template = row.data;
         let copiedSources = [];
-        template.sources.forEach(source => {
+        template.sources.forEach((source) => {
             copiedSources.push({
                 id: source.id,
                 directory: source.directory,
-                network: source.network
-            })
+                network: source.network,
+            });
         });
         let copiedTargets = [];
-        template.targets.forEach(target => {
+        template.targets.forEach((target) => {
             copiedTargets.push({
                 id: target.id,
                 directory: target.directory,
-                network: target.network
-            })
+                network: target.network,
+            });
         });
         this.dialogService
             .open(TemplateFormComponent, {

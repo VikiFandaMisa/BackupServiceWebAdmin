@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { NbDialogRef } from "@nebular/theme";
-import { ReturnAction } from "../template-form.component";
+import { ReturnAction } from "../return-action";
 
 @Component({
     selector: "network-form",

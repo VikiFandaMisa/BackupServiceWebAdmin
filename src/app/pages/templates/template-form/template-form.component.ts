@@ -9,11 +9,7 @@ import {
 } from "../../../@core/data/templates";
 import { Time } from "@angular/common";
 import { NetworkFormComponent } from "./network-form/network-form.component";
-
-export enum ReturnAction {
-    submit,
-    delete,
-}
+import { ReturnAction } from "./return-action";
 
 @Component({
     selector: "template-form",
