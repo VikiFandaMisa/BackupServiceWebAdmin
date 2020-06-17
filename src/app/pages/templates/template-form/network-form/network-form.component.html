@@ -1,0 +1,22 @@
+<nb-card>
+    <nb-card-header>Network</nb-card-header>
+    <nb-card-body>
+        <form>
+            bruh
+        </form>
+    </nb-card-body>
+    <nb-card-footer>
+        <button
+            [hidden]="added == true"
+            nbButton
+            status="danger"
+            (click)="delete()"
+        >
+            Delete
+        </button>
+
+        <button id="submit" nbButton status="success" (click)="submit()">
+            Submit
+        </button>
+    </nb-card-footer>
+</nb-card>

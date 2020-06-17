@@ -69,6 +69,22 @@ export class TemplatesComponent {
 
     editClick(row: TreeNode) {
         const template: Template = row.data;
+        let copiedSources = [];
+        template.sources.forEach(source => {
+            copiedSources.push({
+                id: source.id,
+                directory: source.directory,
+                network: source.network
+            })
+        });
+        let copiedTargets = [];
+        template.targets.forEach(target => {
+            copiedTargets.push({
+                id: target.id,
+                directory: target.directory,
+                network: target.network
+            })
+        });
         this.dialogService
             .open(TemplateFormComponent, {
                 context: {
@@ -82,8 +98,8 @@ export class TemplatesComponent {
                         end: template.end,
                         paused: template.paused,
                         retention: template.retention,
-                        sources: template.sources,
-                        targets: template.targets,
+                        sources: copiedSources,
+                        targets: copiedTargets,
                     },
                 },
             })
@@ -102,6 +118,8 @@ export class TemplatesComponent {
 
         const nextWeek: Date = new Date();
         nextWeek.setTime(Date.now() + 1000 * 60 * 60 * 24 * 7);
+
+        console.log(this.data);
 
         this.dialogService
             .open(TemplateFormComponent, {

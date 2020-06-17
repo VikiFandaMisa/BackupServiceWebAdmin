@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { NbAuthService } from "@nebular/auth";
-import { Router, NavigationEnd } from "@angular/router";
+import { Router } from "@angular/router";
 
 @Component({
     selector: "login-redirect",

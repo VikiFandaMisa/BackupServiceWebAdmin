@@ -28,6 +28,7 @@ import { LoginRedirectComponent } from "../components/login-redirect/login-redir
 import { JobFormComponent } from "./jobs/job-form/job-form.component";
 import { ComputerFormComponent } from "./computers/computer-form/computer-form.component";
 import { TemplateFormComponent } from "./templates/template-form/template-form.component";
+import { NetworkFormComponent } from "./templates/template-form/network-form/network-form.component";
 import { TimepickerComponent } from "../components/timepicker/timepicker.component";
 import { FormsModule } from "@angular/forms";
 
@@ -63,6 +64,7 @@ import { FormsModule } from "@angular/forms";
         LoginRedirectComponent,
         ComputerFormComponent,
         TemplateFormComponent,
+        NetworkFormComponent,
         TimepickerComponent,
     ],
 })

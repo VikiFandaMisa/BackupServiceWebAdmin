@@ -1,28 +1,137 @@
 <nb-card>
     <nb-card-header>{{ template.name }}</nb-card-header>
     <nb-card-body>
-        <form>
-            <div class="form-group row"></div>
-        </form>
+        <div class="form-group row">
+            <label for="inputComputer" class="label col-sm-2 col-form-label"
+                >Name</label
+            >
+            <div id="name" class="col-sm-10">
+                <input type="text" [(ngModel)]="template.name" nbInput />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputComputer" class="label col-sm-2 col-form-label"
+                >Type</label
+            >
+            <div id="type" class="col-sm-10">
+                <nb-select required [(selected)]="template.type">
+                    <nb-option *ngFor="let type of backupTypes" [value]="type"
+                        >{{ typeToString(type) }}
+                    </nb-option>
+                </nb-select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputComputer" class="label col-sm-2 col-form-label"
+                >Retence</label
+            >
+            <div id="retention" class="col-sm-10">
+                <input
+                    type="number"
+                    [(ngModel)]="template.retention"
+                    nbInput
+                    min="0"
+                />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputComputer" class="label col-sm-2 col-form-label"
+                >Start</label
+            >
+            <div id="start" class="col-sm-10">
+                <timepicker [(time)]="startTime"></timepicker>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputComputer" class="label col-sm-2 col-form-label"
+                >End</label
+            >
+            <div id="end" class="col-sm-10">
+                <timepicker [(time)]="endTime"></timepicker>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputComputer" class="label col-sm-2 col-form-label"
+                >Period</label
+            >
+            <div id="period" class="col-sm-10">bruh</div>
+        </div>
+        <div class="form-group row">
+            <label for="inputComputer" class="label col-sm-2 col-form-label"
+                >Format</label
+            >
+            <div id="format" class="col-sm-10">
+                <nb-select required [(selected)]="template.targetFileType">
+                    <nb-option
+                        *ngFor="let fileType of backupFileTypes"
+                        [value]="fileType"
+                        >{{ fileTypeToString(fileType) }}
+                    </nb-option>
+                </nb-select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputComputer" class="label col-sm-2 col-form-label"
+                >Sources</label
+            >
+            <div id="sources" class="col-sm-1">
+                <button id="addRow" nbButton (click)="addSource()">
+                    +
+                </button>
+            </div>
+            <div id="sources" class="col-sm-9">
+                <div *ngFor="let source of template.sources; let i = index">
+                    <input [(ngModel)]="source.directory" nbInput fullWidth />
+                    <button nbButton status="danger" (click)="removeSource(i)">
+                        <nb-icon [icon]="'trash-outline'" pack="eva"></nb-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputComputer" class="label col-sm-2 col-form-label"
+                >Targets</label
+            >
+            <div id="sources" class="col-sm-1">
+                <button id="addRow" nbButton (click)="addTarget()">
+                    +
+                </button>
+            </div>
+            <div id="targets" class="col-sm-9">
+                <div *ngFor="let target of template.targets; let i = index">
+                    <input [(ngModel)]="target.directory" nbInput fullWidth />
+                    <button nbButton (click)="targetNework(i)">
+                        <nb-icon [icon]="'wifi-outline'" pack="eva"></nb-icon>
+                    </button>
+                    <button nbButton status="danger" (click)="removeTarget(i)">
+                        <nb-icon [icon]="'trash-outline'" pack="eva"></nb-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputComputer" class="label col-sm-2 col-form-label"
+                >Paused</label
+            >
+            <div id="paused" class="col-sm-10">
+                <nb-radio-group required [(value)]="template.paused">
+                    <nb-radio [value]="false">Active</nb-radio>
+                    <nb-radio [value]="true">Paused</nb-radio>
+                </nb-radio-group>
+            </div>
+        </div>
     </nb-card-body>
     <nb-card-footer>
         <button
             [hidden]="template.id == null"
             nbButton
-            matRipple
             status="danger"
             (click)="delete()"
         >
             Delete
         </button>
 
-        <button
-            id="submit"
-            nbButton
-            matRipple
-            status="success"
-            (click)="submit()"
-        >
+        <button id="submit" nbButton status="success" (click)="submit()">
             Submit
         </button>
     </nb-card-footer>
