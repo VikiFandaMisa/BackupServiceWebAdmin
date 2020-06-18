@@ -7,7 +7,6 @@ export interface Account {
     admin: boolean;
     email: string;
     sendReports: boolean;
-    reportPeriod: string;
 }
 
 export abstract class AccountData {

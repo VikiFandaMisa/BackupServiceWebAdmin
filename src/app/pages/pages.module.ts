@@ -31,6 +31,7 @@ import { TemplateFormComponent } from "./templates/template-form/template-form.c
 import { NetworkFormComponent } from "./templates/template-form/network-form/network-form.component";
 import { TimepickerComponent } from "../components/timepicker/timepicker.component";
 import { FormsModule } from "@angular/forms";
+import { AccountFormComponent } from './accounts/account-form/account-form.component';
 
 @NgModule({
     imports: [
@@ -53,7 +54,7 @@ import { FormsModule } from "@angular/forms";
         NbRadioModule,
         FormsModule,
     ],
-    declarations: [
+    declarations: [        
         PagesComponent,
         LogComponent,
         TemplatesComponent,
@@ -66,6 +67,7 @@ import { FormsModule } from "@angular/forms";
         TemplateFormComponent,
         NetworkFormComponent,
         TimepickerComponent,
+        AccountFormComponent
     ],
 })
 export class PagesModule {}

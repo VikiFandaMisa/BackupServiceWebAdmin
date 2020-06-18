@@ -20,12 +20,19 @@
     }
 
     nb-card-body {
-        margin: auto;        
+        margin: auto;
+        width: 35rem;
     }
 
     #submit {
         float: right;
     }
 
-    
+    #admin nb-radio-group {
+        display: flex;
+    }
+
+    #sendreports nb-radio-group {
+        display: flex;
+    }
 }
