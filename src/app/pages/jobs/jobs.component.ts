@@ -142,8 +142,8 @@ export class JobsComponent {
 
     add(job: Job) {
         job.id = 0;
-        this.jobData.postJob(job).subscribe((_) => {
-            this.data.push({ data: job });
+        this.jobData.postJob(job).subscribe((ret) => {
+            this.data.push({ data: ret });
             this.createDataSource();
         });
     }

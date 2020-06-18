@@ -11,21 +11,27 @@
         margin-right: 1rem;
     }
 
-    nb-select {
-        width: 20rem;
-    }
-
     .row {
         width: 100%;
     }
 
     nb-card-body {
-        margin: auto;        
+        margin: auto;
+        width: 35rem;
+    }
+
+    input {
+        width: 100%;
     }
 
     #submit {
         float: right;
     }
 
-    
+    #sendreports,
+    #admin {
+        nb-radio-group {
+            display: flex;
+        }
+    }
 }

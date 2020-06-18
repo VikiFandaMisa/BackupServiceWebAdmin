@@ -33,6 +33,7 @@ import { NetworkFormComponent } from "./templates/template-form/network-form/net
 import { TimepickerComponent } from "../components/datetimepicker/timepicker/timepicker.component";
 import { DatetimepickerComponent } from "../components/datetimepicker/datetimepicker.component";
 import { FormsModule } from "@angular/forms";
+import { AccountFormComponent } from './accounts/account-form/account-form.component';
 
 @NgModule({
     imports: [
@@ -56,7 +57,7 @@ import { FormsModule } from "@angular/forms";
         FormsModule,
         NbDatepickerModule,
     ],
-    declarations: [
+    declarations: [        
         PagesComponent,
         LogComponent,
         TemplatesComponent,
@@ -69,6 +70,7 @@ import { FormsModule } from "@angular/forms";
         TemplateFormComponent,
         NetworkFormComponent,
         TimepickerComponent,
+        AccountFormComponent,
         DatetimepickerComponent,
     ],
 })

@@ -4,8 +4,14 @@ import {
     NbSortRequest,
     NbTreeGridDataSource,
     NbTreeGridDataSourceBuilder,
+    NbDialogService,
 } from "@nebular/theme";
 import { Account, AccountData } from "../../@core/data/account";
+import { Job } from "../../@core/data/job";
+import {
+    AccountFormComponent,
+    ReturnAction,
+} from "./account-form/account-form.component";
 
 interface TreeNode {
     data: Account;
@@ -24,9 +30,12 @@ export class AccountsComponent {
     sortColumn: string;
     sortDirection: NbSortDirection = NbSortDirection.NONE;
 
+    jobData: any;
+
     constructor(
         private dataSourceBuilder: NbTreeGridDataSourceBuilder<Account>,
-        private accountData: AccountData
+        private accountData: AccountData,
+        private dialogService: NbDialogService
     ) {
         this.loadAccounts();
     }
@@ -57,11 +66,82 @@ export class AccountsComponent {
         return minWithForMultipleColumns + nextColumnStep * index;
     }
 
-    click(row) {
-        console.log(row.data);
+    editClick(row: TreeNode) {
+        const account: Account = row.data;
+        this.dialogService
+            .open(AccountFormComponent, {
+                context: {
+                    account: {
+                        id: account.id,
+                        username: account.username,
+                        password: account.password,
+                        admin: account.admin,
+                        email: account.email,
+                        sendReports: account.sendReports,
+                    },
+                },
+            })
+            .onClose.subscribe((ret) => {
+                if (ret != null) {
+                    let account = ret[1];
+                    if (ret[0] == ReturnAction.delete) this.delete(account);
+                    else this.edit(account);
+                }
+            });
     }
 
-    editClick() {}
+    edit(account: Account) {
+        for (let i = 0; i < this.data.length; i++) {
+            if (this.data[i].data.id == account.id) {
+                this.accountData.putAccount(account).subscribe((_) => {
+                    this.data[i].data = account;
+                    this.createDataSource();
+                });
+                break;
+            }
+        }
+    }
 
-    addClick() {}
+    delete(account: Account) {
+        for (let i = 0; i < this.data.length; i++) {
+            if (this.data[i].data.id == account.id) {
+                this.accountData.deleteAccount(account).subscribe((_) => {
+                    this.data.splice(i, 1);
+                    this.createDataSource();
+                });
+                break;
+            }
+        }
+    }
+
+    addClick() {
+        this.dialogService
+            .open(AccountFormComponent, {
+                context: {
+                    account: {
+                        id: null,
+                        username: null,
+                        password: null,
+                        admin: false,
+                        email: null,
+                        sendReports: true,
+                    },
+                },
+            })
+            .onClose.subscribe((ret) => {
+                if (ret != null) this.add(ret[1]);
+            });
+    }
+
+    add(account: Account) {
+        account.id = 0;
+        this.accountData.postAccount(account).subscribe((ret) => {
+            this.data.push({ data: ret });
+            this.createDataSource();
+        });
+        this.loadAccounts();
+    }
+    createDataSource() {
+        this.dataSource = this.dataSourceBuilder.create(this.data);
+    }
 }
