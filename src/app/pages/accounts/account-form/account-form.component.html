@@ -4,26 +4,48 @@
         <form>
             <div class="form-group row">
                 <label for="inputUsername" class="label col-sm-3 col-form-label"
-                    >Username </label
-                >
+                    >Username
+                </label>
                 <div id="name" class="col-sm-9">
-                    <input type="text" [(ngModel)]="account.username" nbInput name="name" />
+                    <input
+                        type="text"
+                        [(ngModel)]="account.username"
+                        nbInput
+                        name="name"
+                    />
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputEmail" class="label col-sm-3 col-form-label"
-                    >Email </label
-                >
+                    >Email
+                </label>
                 <div id="email" class="col-sm-9">
-                    <input type="text" [(ngModel)]="account.email" nbInput  name="email"/>
+                    <input
+                        type="text"
+                        [(ngModel)]="account.email"
+                        nbInput
+                        name="email"
+                    />
                 </div>
             </div>
             <div class="form-group row">
-                <label [hidden]="account.id != null" for="inputPassword" class="label col-sm-3 col-form-label"
-                    >Password </label
+                <label
+                    [hidden]="account.id != null"
+                    for="inputPassword"
+                    class="label col-sm-3 col-form-label"
+                    >Password
+                </label>
+                <div
+                    [hidden]="account.id != null"
+                    id="password"
+                    class="col-sm-9"
                 >
-                <div [hidden]="account.id != null" id="password" class="col-sm-9">
-                    <input type="password" [(ngModel)]="account.password" nbInput name="password" />
+                    <input
+                        type="password"
+                        [(ngModel)]="account.password"
+                        nbInput
+                        name="password"
+                    />
                 </div>
             </div>
             <div class="form-group row">
@@ -31,18 +53,35 @@
                     >Admin</label
                 >
                 <div id="admin" class="col-sm-9">
-                    <nb-radio-group required [(value)]="account.admin" id="admin" name="admin">
+                    <nb-radio-group
+                        required
+                        [(value)]="account.admin"
+                        id="admin"
+                        name="admin"
+                    >
                         <nb-radio [value]="true">Yes</nb-radio>
                         <nb-radio [value]="false">No</nb-radio>
                     </nb-radio-group>
                 </div>
             </div>
             <div class="form-group row">
-                <label [hidden]="account.id != null" for="InputReports" class="label col-sm-3 col-form-label"
+                <label
+                    [hidden]="account.id != null"
+                    for="InputReports"
+                    class="label col-sm-3 col-form-label"
                     >SendReports</label
                 >
-                <div [hidden]="account.id != null" id="sendreports" class="col-sm-9">
-                    <nb-radio-group required [(value)]="account.sendReports" id="sendreports" name="sendreports">
+                <div
+                    [hidden]="account.id != null"
+                    id="sendreports"
+                    class="col-sm-9"
+                >
+                    <nb-radio-group
+                        required
+                        [(value)]="account.sendReports"
+                        id="sendreports"
+                        name="sendreports"
+                    >
                         <nb-radio [value]="true">Yes</nb-radio>
                         <nb-radio [value]="false">No</nb-radio>
                     </nb-radio-group>
@@ -54,13 +93,20 @@
         <button
             [hidden]="account.id == null"
             nbButton
+            outline
             status="danger"
             (click)="delete()"
         >
             Delete
         </button>
 
-        <button id="submit" nbButton status="success" (click)="submit()">
+        <button
+            id="submit"
+            nbButton
+            outline
+            status="success"
+            (click)="submit()"
+        >
             Submit
         </button>
     </nb-card-footer>
