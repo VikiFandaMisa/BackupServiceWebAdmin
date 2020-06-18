@@ -1,0 +1,26 @@
+@import "../../../styles/themes";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~@nebular/theme/styles/global/breakpoints";
+
+@include nb-install-component() {
+    input {
+        width: 100%;
+    }
+
+    .cancel {
+        margin-right: 1rem;
+    }
+
+    .row {
+        width: 100%;
+    }
+
+    nb-card-body {
+        margin: auto;
+        width: 35rem;
+    }
+
+    #submit {
+        float: right;
+    }
+}

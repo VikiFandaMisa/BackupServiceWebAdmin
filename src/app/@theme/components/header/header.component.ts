@@ -4,13 +4,14 @@ import {
     NbMenuService,
     NbSidebarService,
     NbThemeService,
+    NbDialogService,
 } from "@nebular/theme";
 
 import { AccountData } from "../../../@core/data/account";
 import { LayoutService } from "../../../@core/utils";
-import { map, takeUntil } from "rxjs/operators";
+import { map, takeUntil, filter } from "rxjs/operators";
 import { Subject, Observable } from "rxjs";
-import { RippleService } from "../../../@core/utils/ripple.service";
+import { SelfFormComponent } from "./self-form/self-form.component";
 
 @Component({
     selector: "ngx-header",
@@ -36,23 +37,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
             value: "cosmic",
             name: "Cosmic",
         },
-        {
-            value: "corporate",
-            name: "Corporate",
-        },
-        {
-            value: "material-light",
-            name: "Material Light",
-        },
-        {
-            value: "material-dark",
-            name: "Material Dark",
-        },
     ];
 
     currentTheme = "default";
 
-    userMenu = [{ title: "Log out", link: "/auth/logout" }];
+    userMenu = [
+        { title: "Settings" },
+        { title: "Log out", link: "/auth/logout" },
+    ];
 
     public constructor(
         private sidebarService: NbSidebarService,
@@ -61,7 +53,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         private accountsService: AccountData,
         private layoutService: LayoutService,
         private breakpointService: NbMediaBreakpointsService,
-        private rippleService: RippleService
+        private dialogService: NbDialogService
     ) {
         this.materialTheme$ = this.themeService.onThemeChange().pipe(
             map((theme) => {
@@ -74,7 +66,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.currentTheme = this.themeService.currentTheme;
 
-        this.accountsService.getSelf().subscribe((self) => (this.user = self));
+        this.loadSelf();
 
         const { xl } = this.breakpointService.getBreakpointsMap();
         this.themeService
@@ -95,13 +87,41 @@ export class HeaderComponent implements OnInit, OnDestroy {
             )
             .subscribe((themeName) => {
                 this.currentTheme = themeName;
-                this.rippleService.toggle(themeName?.startsWith("material"));
+            });
+
+        this.menuService
+            .onItemClick()
+            .pipe(filter(({ tag }) => tag === "userMenu"))
+            .subscribe((bag) => {
+                if (bag.item.title == "Settings") {
+                    this.dialogService
+                        .open(SelfFormComponent, {
+                            context: {
+                                account: {
+                                    id: this.user.id,
+                                    username: this.user.username,
+                                    password: this.user.password,
+                                    admin: this.user.admin,
+                                    email: this.user.email,
+                                    sendReports: this.user.sendReports,
+                                },
+                            },
+                        })
+                        .onClose.subscribe((account) => {
+                            console.log(account);
+                            if (account != null) this.accountsService.putAccount(account).subscribe(() => this.loadSelf());
+                        });
+                }
             });
     }
 
     ngOnDestroy() {
         this.destroy$.next();
         this.destroy$.complete();
+    }
+
+    loadSelf() {
+        this.accountsService.getSelf().subscribe((self) => (this.user = self));
     }
 
     changeTheme(themeName: string) {

@@ -1,0 +1,43 @@
+<nb-card>
+    <nb-card-header>Settings</nb-card-header>
+    <nb-card-body>
+        <div class="form-group row">
+            <label class="col-sm-4 label">Username</label>
+            <div class="col-sm-8">
+                <input type="text" [(ngModel)]="account.username" nbInput />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-4 label">Email</label>
+            <div class="col-sm-8">
+                <input type="text" [(ngModel)]="account.email" nbInput />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-4 label">Send reports</label>
+            <div class="col-sm-8">
+                <nb-radio-group required [(value)]="account.sendReports">
+                    <nb-radio [value]="true">Yes</nb-radio>
+                    <nb-radio [value]="false">No</nb-radio>
+                </nb-radio-group>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-4 label">New password</label>
+            <div class="col-sm-8">
+                <input type="password" [(ngModel)]="account.password" nbInput />
+            </div>
+        </div>
+    </nb-card-body>
+    <nb-card-footer>
+        <button
+            id="submit"
+            nbButton
+            outline
+            status="success"
+            (click)="submit()"
+        >
+            Submit
+        </button>
+    </nb-card-footer>
+</nb-card>

@@ -12,6 +12,9 @@ import {
     NbSelectModule,
     NbIconModule,
     NbThemeModule,
+    NbCardModule,
+    NbRadioModule,
+    NbInputModule,
 } from "@nebular/theme";
 import { NbEvaIconsModule } from "@nebular/eva-icons";
 import { NbSecurityModule } from "@nebular/security";
@@ -39,6 +42,8 @@ import { CORPORATE_THEME } from "./styles/theme.corporate";
 import { DARK_THEME } from "./styles/theme.dark";
 import { MATERIAL_LIGHT_THEME } from "./styles/material/theme.material-light";
 import { MATERIAL_DARK_THEME } from "./styles/material/theme.material-dark";
+import { SelfFormComponent } from "./components/header/self-form/self-form.component";
+import { FormsModule } from "@angular/forms";
 
 const NB_MODULES = [
     NbLayoutModule,
@@ -52,6 +57,10 @@ const NB_MODULES = [
     NbSelectModule,
     NbIconModule,
     NbEvaIconsModule,
+    NbCardModule,
+    FormsModule,
+    NbRadioModule,
+    NbInputModule,
 ];
 const COMPONENTS = [
     HeaderComponent,
@@ -60,6 +69,7 @@ const COMPONENTS = [
     OneColumnLayoutComponent,
     ThreeColumnsLayoutComponent,
     TwoColumnsLayoutComponent,
+    SelfFormComponent,
 ];
 const PIPES = [
     CapitalizePipe,
