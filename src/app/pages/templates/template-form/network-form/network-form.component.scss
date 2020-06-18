@@ -11,19 +11,21 @@
         margin-right: 1rem;
     }
 
-    nb-select {
-        width: 20rem;
-    }
-
     .row {
         width: 100%;
     }
 
     nb-card-body {
         margin: auto;
+        width: 30rem;
     }
 
     #submit {
         float: right;
+    }
+
+    #mode,
+    #encryption {
+        width: 5rem;
     }
 }

@@ -9,9 +9,10 @@ import { Time } from "@angular/common";
 export class TimepickerComponent {
     @Input() time: Time;
     @Output() timeChange = new EventEmitter();
+    @Output() change = new EventEmitter();
 
-    change() {
-        console.log(this.time);
+    onChange() {
         this.timeChange.emit(this.time);
+        this.change.emit();
     }
 }

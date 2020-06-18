@@ -1,4 +1,4 @@
-import { Path } from "./path";
+import { Path, NetworkSettings } from "./path";
 import { Observable } from "rxjs";
 
 export const backupType: number[] = [1, 2, 3];
@@ -26,6 +26,7 @@ export namespace BackupTypeUtils {
         }
     }
 }
+
 export class Template {
     id: number;
     name: string;

@@ -45,13 +45,20 @@
         <button
             [hidden]="job.id == null"
             nbButton
+            outline
             status="danger"
             (click)="delete()"
         >
             Delete
         </button>
 
-        <button id="submit" nbButton status="success" (click)="submit()">
+        <button
+            id="submit"
+            nbButton
+            outline
+            status="success"
+            (click)="submit()"
+        >
             Submit
         </button>
     </nb-card-footer>

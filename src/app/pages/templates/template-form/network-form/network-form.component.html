@@ -1,9 +1,58 @@
 <nb-card>
     <nb-card-header>Network</nb-card-header>
     <nb-card-body>
-        <form>
-            bruh
-        </form>
+        <div class="form-group row">
+            <label class="label col-sm-3 col-form-label"
+                >Server</label
+            >
+            <div id="server" class="col-sm-9">
+                <input type="text" [(ngModel)]="network.server" nbInput />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="label col-sm-3 col-form-label"
+                >Name</label
+            >
+            <div id="name" class="col-sm-9">
+                <input type="text" [(ngModel)]="network.name" nbInput />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="label col-sm-3 col-form-label"
+                >Password</label
+            >
+            <div id="server" class="col-sm-9">
+                <input type="password" [(ngModel)]="network.password" nbInput />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="label col-sm-3 col-form-label"
+                >Mode</label
+            >
+            <div id="mode" class="col-sm-9">
+                <nb-select required [(selected)]="network.mode">
+                    <nb-option
+                        *ngFor="let mode of networkModes"
+                        [value]="mode"
+                        >{{ networkModeToString(mode) }}
+                    </nb-option>
+                </nb-select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="label col-sm-3 col-form-label"
+                >Encryption</label
+            >
+            <div id="encryption" class="col-sm-9">
+                <nb-select required [(selected)]="network.encryption">
+                    <nb-option
+                        *ngFor="let encryption of networkEncryptions"
+                        [value]="encryption"
+                        >{{ networkEncryptionToString(encryption) }}
+                    </nb-option>
+                </nb-select>
+            </div>
+        </div>
     </nb-card-body>
     <nb-card-footer>
         <button
