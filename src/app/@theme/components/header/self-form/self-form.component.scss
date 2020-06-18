@@ -1,4 +1,4 @@
-@import "../../../../@theme/styles/themes";
+@import "../../../styles/themes";
 @import "~bootstrap/scss/mixins/breakpoints";
 @import "~@nebular/theme/styles/global/breakpoints";
 
@@ -17,15 +17,10 @@
 
     nb-card-body {
         margin: auto;
-        width: 30rem;
+        width: 35rem;
     }
 
     #submit {
         float: right;
-    }
-
-    #mode,
-    #encryption {
-        width: 5rem;
     }
 }

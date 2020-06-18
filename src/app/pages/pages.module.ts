@@ -13,6 +13,7 @@ import {
     NbSelectModule,
     NbTooltipModule,
     NbRadioModule,
+    NbDatepickerModule,
 } from "@nebular/theme";
 
 import { ThemeModule } from "../@theme/theme.module";
@@ -29,7 +30,8 @@ import { JobFormComponent } from "./jobs/job-form/job-form.component";
 import { ComputerFormComponent } from "./computers/computer-form/computer-form.component";
 import { TemplateFormComponent } from "./templates/template-form/template-form.component";
 import { NetworkFormComponent } from "./templates/template-form/network-form/network-form.component";
-import { TimepickerComponent } from "../components/timepicker/timepicker.component";
+import { TimepickerComponent } from "../components/datetimepicker/timepicker/timepicker.component";
+import { DatetimepickerComponent } from "../components/datetimepicker/datetimepicker.component";
 import { FormsModule } from "@angular/forms";
 import { AccountFormComponent } from './accounts/account-form/account-form.component';
 
@@ -53,6 +55,7 @@ import { AccountFormComponent } from './accounts/account-form/account-form.compo
         NbTooltipModule,
         NbRadioModule,
         FormsModule,
+        NbDatepickerModule,
     ],
     declarations: [        
         PagesComponent,
@@ -67,7 +70,8 @@ import { AccountFormComponent } from './accounts/account-form/account-form.compo
         TemplateFormComponent,
         NetworkFormComponent,
         TimepickerComponent,
-        AccountFormComponent
+        AccountFormComponent,
+        DatetimepickerComponent,
     ],
 })
 export class PagesModule {}
