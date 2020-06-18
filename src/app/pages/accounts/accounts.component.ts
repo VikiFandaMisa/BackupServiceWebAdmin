@@ -66,10 +66,6 @@ export class AccountsComponent {
         return minWithForMultipleColumns + nextColumnStep * index;
     }
 
-    click(row) {
-        console.log(row.data);
-    }
-
     editClick(row: TreeNode) {
         const account: Account = row.data;
         this.dialogService
@@ -91,7 +87,6 @@ export class AccountsComponent {
                     if (ret[0] == ReturnAction.delete) this.delete(account);
                     else this.edit(account);
                 }
-                console.log(ret);
             });
     }
 
@@ -127,7 +122,7 @@ export class AccountsComponent {
                         id: null,
                         username: null,
                         password: null,
-                        admin: true,
+                        admin: false,
                         email: null,
                         sendReports: true,
                     },
@@ -135,14 +130,13 @@ export class AccountsComponent {
             })
             .onClose.subscribe((ret) => {
                 if (ret != null) this.add(ret[1]);
-                console.log(ret);
             });
     }
 
     add(account: Account) {
         account.id = 0;
-        this.accountData.postAccount(account).subscribe((_) => {
-            this.data.push({ data: account });
+        this.accountData.postAccount(account).subscribe((ret) => {
+            this.data.push({ data: ret });
             this.createDataSource();
         });
         this.loadAccounts();

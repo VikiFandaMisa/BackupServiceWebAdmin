@@ -144,8 +144,8 @@ export class TemplatesComponent {
 
     add(template: Template) {
         template.id = 0;
-        this.templateData.postTemplate(template).subscribe((_) => {
-            this.data.push({ data: template });
+        this.templateData.postTemplate(template).subscribe((ret) => {
+            this.data.push({ data: ret });
             this.createDataSource();
         });
     }
