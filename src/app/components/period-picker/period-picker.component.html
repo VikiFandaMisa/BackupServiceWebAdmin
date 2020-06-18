@@ -1,0 +1,46 @@
+<div>
+    <div id="period">
+        <button
+            nbButton
+            outline
+            [status]="period.periodMode ? 'info' : 'basic'"
+            (click)="switchMode()"
+        >
+            <nb-icon [icon]="'arrow-right-outline'" pack="eva"></nb-icon>
+        </button>
+        <input
+            type="number"
+            [(ngModel)]="period.value"
+            (input)="onChange()"
+            nbInput
+            min="0"
+        />
+        <nb-select required [(selected)]="period.unit">
+            <nb-option *ngFor="let unit of periodUnits" [value]="unit"
+                >{{ periodUnitToString(unit) }}
+            </nb-option>
+        </nb-select>
+    </div>
+    <div id="week">
+        <button
+            nbButton
+            outline
+            [status]="period.periodMode ? 'basic' : 'info'"
+            (click)="switchMode()"
+        >
+            <nb-icon [icon]="'arrow-right-outline'" pack="eva"></nb-icon>
+        </button>
+        <time-picker [(time)]="period.time" (change)="onChange()"></time-picker>
+        <div>
+            <button
+                *ngFor="let day of weekDays"
+                nbButton
+                outline
+                [status]="period.days.includes(day) ? 'info' : 'basic'"
+                (click)="switchDay(day)"
+            >
+                {{ day + 1 }}
+            </button>
+        </div>
+    </div>
+</div>

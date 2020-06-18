@@ -2,11 +2,11 @@ import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { Time } from "@angular/common";
 
 @Component({
-    selector: "timepicker",
-    templateUrl: "./timepicker.component.html",
-    styleUrls: ["./timepicker.component.scss"],
+    selector: "time-picker",
+    templateUrl: "./time-picker.component.html",
+    styleUrls: ["./time-picker.component.scss"],
 })
-export class TimepickerComponent {
+export class TimePickerComponent {
     @Input() time: Time;
     @Output() timeChange = new EventEmitter();
     @Output() change = new EventEmitter();

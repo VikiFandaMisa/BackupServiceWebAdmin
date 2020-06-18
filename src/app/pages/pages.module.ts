@@ -30,10 +30,11 @@ import { JobFormComponent } from "./jobs/job-form/job-form.component";
 import { ComputerFormComponent } from "./computers/computer-form/computer-form.component";
 import { TemplateFormComponent } from "./templates/template-form/template-form.component";
 import { NetworkFormComponent } from "./templates/template-form/network-form/network-form.component";
-import { TimepickerComponent } from "../components/datetimepicker/timepicker/timepicker.component";
-import { DatetimepickerComponent } from "../components/datetimepicker/datetimepicker.component";
+import { TimePickerComponent } from "../components/datetime-picker/time-picker/time-picker.component";
+import { DatetimePickerComponent } from "../components/datetime-picker/datetime-picker.component";
+import { PeriodPickerComponent } from "../components/period-picker/period-picker.component";
 import { FormsModule } from "@angular/forms";
-import { AccountFormComponent } from './accounts/account-form/account-form.component';
+import { AccountFormComponent } from "./accounts/account-form/account-form.component";
 
 @NgModule({
     imports: [
@@ -57,7 +58,7 @@ import { AccountFormComponent } from './accounts/account-form/account-form.compo
         FormsModule,
         NbDatepickerModule,
     ],
-    declarations: [        
+    declarations: [
         PagesComponent,
         LogComponent,
         TemplatesComponent,
@@ -69,9 +70,10 @@ import { AccountFormComponent } from './accounts/account-form/account-form.compo
         ComputerFormComponent,
         TemplateFormComponent,
         NetworkFormComponent,
-        TimepickerComponent,
+        TimePickerComponent,
         AccountFormComponent,
-        DatetimepickerComponent,
+        DatetimePickerComponent,
+        PeriodPickerComponent,
     ],
 })
 export class PagesModule {}

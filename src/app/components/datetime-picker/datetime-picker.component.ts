@@ -2,11 +2,11 @@ import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { Time } from "@angular/common";
 
 @Component({
-    selector: "datetimepicker",
-    templateUrl: "./datetimepicker.component.html",
-    styleUrls: ["./datetimepicker.component.scss"],
+    selector: "datetime-picker",
+    templateUrl: "./datetime-picker.component.html",
+    styleUrls: ["./datetime-picker.component.scss"],
 })
-export class DatetimepickerComponent {
+export class DatetimePickerComponent {
     @Input() datetime: Date;
     @Output() datetimeChange = new EventEmitter();
     @Output() change = new EventEmitter();

@@ -1,5 +1,6 @@
-import { Path, NetworkSettings } from "./path";
+import { Path } from "./path";
 import { Observable } from "rxjs";
+import { Period } from './period';
 
 export const backupType: number[] = [1, 2, 3];
 export const backupFileType: number[] = [1, 2];
@@ -30,7 +31,7 @@ export namespace BackupTypeUtils {
 export class Template {
     id: number;
     name: string;
-    period: string;
+    period: Period;
     type: number;
     targetFileType: number;
     start: string;

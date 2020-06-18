@@ -23,6 +23,7 @@ import { JobData } from "./data/job";
 import { LogItemData } from "./data/logItem";
 import { TemplateData } from "./data/templates";
 import {  } from "./data/networkSettings";
+import {  } from "./data/period";
 
 import { AccountService } from "./api/account.service";
 import { ComputerService } from "./api/computer.service";

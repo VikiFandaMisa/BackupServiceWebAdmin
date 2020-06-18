@@ -125,7 +125,16 @@ export class TemplatesComponent {
                     template: {
                         id: null,
                         name: null,
-                        period: null,
+                        period: {
+                            periodMode: true,
+                            unit: 2,
+                            value: 1,
+                            days: [0],
+                            time: {
+                                hours: 12,
+                                minutes: 0,
+                            },
+                        },
                         type: 1,
                         targetFileType: 1,
                         start: today.toISOString(),

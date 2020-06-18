@@ -108,7 +108,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
                             },
                         })
                         .onClose.subscribe((account) => {
-                            console.log(account);
                             if (account != null) this.accountsService.putAccount(account).subscribe(() => this.loadSelf());
                         });
                 }
