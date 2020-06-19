@@ -33,7 +33,11 @@
                     {{ column }}
                 </th>
                 <td nbTreeGridCell *nbTreeGridCellDef="let row">
-                    {{ row.data[column] == null ? "-" : row.data[column] }}
+                    {{
+                        row.data[column] == null
+                            ? "-"
+                            : formatRowData(row.data, column)
+                    }}
                 </td>
             </ng-container>
         </table>

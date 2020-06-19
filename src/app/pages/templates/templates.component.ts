@@ -6,9 +6,36 @@ import {
     NbTreeGridDataSourceBuilder,
     NbDialogService,
 } from "@nebular/theme";
-import { Template, TemplateData } from "../../@core/data/templates";
+import {
+    Template,
+    TemplateData,
+    BackupTypeUtils,
+} from "../../@core/data/templates";
 import { TemplateFormComponent } from "./template-form/template-form.component";
 import { ReturnAction } from "./template-form/return-action";
+
+function pad(number) {
+    if (number < 10) {
+        return "0" + number;
+    }
+    return number;
+}
+
+function formatDatetime(datetime: string): string {
+    let date = new Date();
+    date.setTime(Date.parse(datetime));
+    return (
+        pad(date.getDate()) +
+        "." +
+        pad(date.getMonth() + 1) +
+        "." +
+        date.getFullYear() +
+        " " +
+        pad(date.getHours()) +
+        ":" +
+        pad(date.getMinutes())
+    );
+}
 
 interface TreeNode {
     data: Template;
@@ -181,5 +208,12 @@ export class TemplatesComponent {
                 break;
             }
         }
+    }
+
+    formatRowData(data: Template, column: string) {
+        if (column == "type") return BackupTypeUtils.toString(data[column]);
+        if (column == "start" || column == "end")
+            return formatDatetime(data[column]);
+        return data[column];
     }
 }

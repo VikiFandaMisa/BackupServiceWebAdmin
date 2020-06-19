@@ -6,8 +6,35 @@ import {
     NbTreeGridDataSourceBuilder,
     NbDialogService,
 } from "@nebular/theme";
-import { Computer, ComputerData } from "../../@core/data/computer";
+import {
+    Computer,
+    ComputerData,
+    ComputerStatusUtils,
+} from "../../@core/data/computer";
 import { ComputerFormComponent } from "./computer-form/computer-form.component";
+
+function pad(number) {
+    if (number < 10) {
+        return "0" + number;
+    }
+    return number;
+}
+
+function formatDatetime(datetime: string): string {
+    let date = new Date();
+    date.setTime(Date.parse(datetime));
+    return (
+        pad(date.getDate()) +
+        "." +
+        pad(date.getMonth() + 1) +
+        "." +
+        date.getFullYear() +
+        " " +
+        pad(date.getHours()) +
+        ":" +
+        pad(date.getMinutes())
+    );
+}
 
 interface TreeNode {
     data: Computer;
@@ -94,5 +121,12 @@ export class ComputersComponent {
                 break;
             }
         }
+    }
+
+    formatRowData(data: Computer, column: string) {
+        if (column == "status")
+            return ComputerStatusUtils.toString(data[column]);
+        if (column == "lastSeen") return formatDatetime(data[column]);
+        return data[column];
     }
 }

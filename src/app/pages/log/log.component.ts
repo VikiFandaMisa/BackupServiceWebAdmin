@@ -5,7 +5,30 @@ import {
     NbTreeGridDataSource,
     NbTreeGridDataSourceBuilder,
 } from "@nebular/theme";
-import { LogItem, LogItemData } from "../../@core/data/logItem";
+import { LogItem, LogItemData, MessageTypeUtils } from "../../@core/data/logItem";
+
+function pad(number) {
+    if (number < 10) {
+        return "0" + number;
+    }
+    return number;
+}
+
+function formatDatetime(datetime: string): string {
+    let date = new Date;
+    date.setTime(Date.parse(datetime));
+    return (
+        pad(date.getDate()) +
+        "." +
+        pad(date.getMonth() + 1) +
+        "." +
+        date.getFullYear() +
+        " " +
+        pad(date.getHours()) +
+        ":" +
+        pad(date.getMinutes())
+    );
+}
 
 interface TreeNode {
     data: LogItem;
@@ -55,5 +78,13 @@ export class LogComponent {
         const minWithForMultipleColumns = 400;
         const nextColumnStep = 100;
         return minWithForMultipleColumns + nextColumnStep * index;
+    }
+
+    formatRowData(data: LogItem, column: string) {
+        if (column == "date")
+            return formatDatetime(data[column]);
+        if (column == "type")
+            return MessageTypeUtils.toString(data[column]);
+        return data[column];
     }
 }
